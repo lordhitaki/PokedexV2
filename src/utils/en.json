@@ -47,6 +47,23 @@
     "Nome": "Name",
     "Esse será seu nome de usuário no aplicativo": "This will be your in-app username.",
     "Informe seu nome de usario": "Enter your username",
-    "Seu nome de usuario precisa de pelo menos três caracteres": "Your username needs at least three characters"
+    "Seu nome de usuario precisa de pelo menos três caracteres": "Your username needs at least three characters",
+    "O Endereço de e-mail ja esta em uso!": "The email address is already in use!",
+    "Esqueci minha senha": "I forgot my password",
+    "Vamos recuperar!": "Let's recover!",
+    "Vamos enviar um código de verificação para o seu e-mail.": "We will send a verification code to your email.",
+    "Bem-vindo de volta, Treinador!": "Welcome back, Trainer!",
+    "Esperamos que tenha tido uma longa jornada desde a última vez em que nos visitou": "We hope you've had a long journey since your last visit.",
+    "Sua Conta Foi Criada com Sucesso!": "Your Account Was Created Successfully!",
+    "Seja bem-vindo, treinador! Estamos animados para acompnhar sua jornada.": "Welcome, coach! We are excited to follow your journey.",
+    "Insirao código": "Enter the code",
+    "Digite o código de 6 digitos enviado para seu e-mail": "Enter the 6-digit code sent to your email",
+    "Não recebeu o código?": "Didn't get the code?",
+    "Entre ou Cadastre-se": "Login or Register",
+    "Você precisa entrar em uma conta para fazer isso.": "You need to sign in to an account to do this.",
+    "Para acessar essa funcionalidade, é necessário fazer login ou criar uma conta.Faça isso agora!": "To access this feature, you need to login or create an account.Do it now!",
+    "Você não favoritou nenhum pokemon :(": "You didn't favorite any pokemon :(",
+    "Clique no icone de coração dos seus pokemons favoritos e eles aparecerão aqui.": "Click on the heart icon of your favorite pokemons and they will appear here.",
+    "Mantenha sua Pokédex atualizada e participe desse mundo.": "Keep your Pokédex up to date and participate in this world."
   }
 }

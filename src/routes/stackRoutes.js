@@ -11,18 +11,22 @@ import RegisterEmail from '../pages/loginAndRegister/register/registerEmail';
 import RegisterPassword from '../pages/loginAndRegister/register/registerPassword';
 import RegisterUser from '../pages/loginAndRegister/register/registerUser';
 import RegisterSuccess from '../pages/loginAndRegister/register/registerSuccess';
+import Home from '../pages/home';
+import ForgotPass from '../pages/loginAndRegister/login/forgotPassword';
+import ForgotCode from '../pages/loginAndRegister/login/forgotPassword/forgotCode';
 
 const Stack = createNativeStackNavigator();
 
 export default function Routes() {
   return (
-    <Stack.Navigator initialRouteName="RegisterUser">
+    <Stack.Navigator initialRouteName="Home">
       <Stack.Screen name="Index" component={Index} options={{ headerShown: false }} />
       <Stack.Screen name="Pre" component={Pre} options={{ headerShown: false }} />
       <Stack.Screen name="Create" component={Create} options={{ headerShown: false }} />
       <Stack.Screen name="Login" component={Login} options={{ headerShown: false }} />
       <Stack.Screen name="Login01" component={Login01} options={{ headerShown: false }} />
       <Stack.Screen name="LoadSuccess" component={LoadSuccess} options={{ headerShown: false }} />
+      <Stack.Screen name="Home" component={Home} options={{ headerShown: false }} />
       <Stack.Screen
         name="RegisterEmail"
         component={RegisterEmail}
@@ -39,18 +43,12 @@ export default function Routes() {
         component={RegisterSuccess}
         options={{ headerShown: false }}
       />
-      {/* <Stack.Screen
-        name="RegisterSuccess"
-        component={RegisterSuccess}
-        options={{ headerShown: false }}
-      />
+      <Stack.Screen name="ForgotPass" component={ForgotPass} options={{ headerShown: false }} />
+      <Stack.Screen name="ForgotCode" component={ForgotCode} options={{ headerShown: false }} />
+      {/* 
       
       
-      <Stack.Screen
-        name="LoginEmail"
-        component={LoginEmail}
-        options={{ headerShown: false }}
-      />
+      
       
       
       <Stack.Screen

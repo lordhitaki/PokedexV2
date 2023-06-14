@@ -52,7 +52,7 @@ export default function Pre() {
       <BoxButton>
         <But
           name={t('Criar conta')}
-          color={'#fff'}
+          color={'button'}
           onPress={() => navigation.navigate('Create')}
           backgroundColor="azul"
         />

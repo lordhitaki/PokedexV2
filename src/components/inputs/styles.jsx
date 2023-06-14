@@ -33,3 +33,13 @@ export const BoxInp = styled.View`
   width: 100%;
   align-items: center;
 `;
+export const InpCode = styled.TextInput`
+  width: 40px;
+  height: 40px;
+  border-width: 1px;
+  border-color: gray;
+  border-radius: 5px;
+  font-size: 20px;
+  text-align: center;
+  margin-right: 5px;
+`;

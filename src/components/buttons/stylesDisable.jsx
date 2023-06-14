@@ -12,7 +12,7 @@ export const Button = styled.TouchableOpacity`
 export const TextButton = styled.Text`
   font-size: 18px;
   line-height: 27px;
-  color: ${(props) => props.color};
+  color: ${(props) => props.theme.colorText[props.color]};
   text-align: center;
   font-family: 'Poppins-SemiBold';
 `;

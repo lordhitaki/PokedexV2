@@ -61,6 +61,7 @@ export default function TabRoute() {
         name={t('Favorito')}
         component={Favorite}
         options={{
+          headerShown: true,
           tabBarIcon: ({ color, size, focused }) => {
             if (focused) {
               return <SvgFavoritosOn />;

@@ -19,28 +19,27 @@ import {
   ErrorMsg,
 } from './styles';
 import { useTranslation } from 'react-i18next';
-import '../../../../utils/i18n';
-import Botao from '../../../../components/buttons';
-import Input from '../../../../components/inputs';
-import api from '../../../../services/api';
+import '../../../../../utils/i18n';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
+import Botao from '../../../../../components/buttons';
+import Input from '../../../../../components/inputs';
+import ConfirmationCodeInput from '../../../../../components/inputs/inputCode';
 
-export default function RegisterUser() {
+export default function ForgotCode() {
   const navigation = useNavigation();
   const { t, i18n } = useTranslation();
   const [isAuthenticated, setIsAuthenticated] = useState(false);
-  const route = useRoute();
-  const { email, password } = route.params;
+  const [code, setCode] = useState();
 
   const signUpSchema = yup.object({
-    username: yup
-      .string()
-      .required(t('Informe seu nome de usario'))
-      .min(3, t('Seu nome de usuario precisa de pelo menos três caracteres')),
+    email: yup.string().email(t('Informe um E-mail válido')).required(t('Digite seu E-mail')),
   });
-
+  const handleCodeFilled = (code) => {
+    setCode(code);
+    // Faça o que precisar com o código completo...
+  };
   const {
     control,
     handleSubmit,
@@ -49,24 +48,11 @@ export default function RegisterUser() {
   } = useForm({
     resolver: yupResolver(signUpSchema),
   });
-  const user = watch('username');
+
+  const user = watch('email');
   const onSubmit = async (data) => {
-    try {
-      const newUser = {
-        name: user,
-        email: email,
-        password: password,
-      };
-      if (user.length > 0) {
-        const response = await api.post('/users', newUser);
-        console.log(response);
-        navigation.navigate('RegisterSuccess');
-      }
-    } catch (error) {
-      if (error.response.data.error.message) {
-        alert(t('O Endereço de e-mail ja esta em uso!'));
-        navigation.navigate('RegisterEmail');
-      }
+    if (user.length > 0) {
+      navigation.navigate('RegisterPassword', { email: user });
     }
   };
 
@@ -82,36 +68,28 @@ export default function RegisterUser() {
               </Touch>
             </BoxBack>
             <BoxTextHeader>
-              <TextCreate>{t('Criar conta')}</TextCreate>
+              <TextCreate>{t('Esqueci minha senha')}</TextCreate>
             </BoxTextHeader>
             <BoxText>
-              <Text02>{t('Para Finalizar')}</Text02>
-              <Text01>{t('Qual é seu nome?')}</Text01>
+              <Text01>{t('Insirao código')}</Text01>
+              <Text02>{t('Digite o código de 6 digitos enviado para seu e-mail')}</Text02>
             </BoxText>
             <BoxInputs>
-              <Input
-                control={control}
-                name="username"
-                placeholder={t('Nome')}
-                placeholderTextColor={'#999999'}
-                errors={errors}
-              />
-              {errors.username && <ErrorMsg>{errors.username.message}</ErrorMsg>}
+              <ConfirmationCodeInput numFields={6} onCodeFilled={handleCodeFilled} />
             </BoxInputs>
             <Email>
-              <TextInput>{t('Esse será seu nome de usuário no aplicativo')}</TextInput>
+              <TextInput>{t('Não recebeu o código?')}</TextInput>
             </Email>
           </Container>
         </KeyboardAvoidingView>
       </TouchableWithoutFeedback>
       <BoxButtons>
         <Botao
-          disabled={user?.length > 0}
+          disabled={code?.length > 0}
           backgroundColor={'azul'}
-          name={t('Criar conta')}
+          name={t('Continuar')}
           onPress={handleSubmit(onSubmit)}
-          color={'button'}
-          s
+          color={'#fff'}
         />
       </BoxButtons>
     </>

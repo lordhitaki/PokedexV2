@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { StatusBar, TouchableWithoutFeedback, Keyboard, KeyboardAvoidingView } from 'react-native';
-import { useNavigation } from '@react-navigation/native';
+import { useNavigation, useRoute } from '@react-navigation/native';
 
 import {
   Container,
@@ -22,7 +22,7 @@ import { useTranslation } from 'react-i18next';
 import '../../../../utils/i18n';
 import Botao from '../../../../components/buttons';
 import Input from '../../../../components/inputs';
-import axios from 'axios';
+import api from '../../../../services/api';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
@@ -47,21 +47,8 @@ export default function RegisterEmail() {
 
   const user = watch('email');
   const onSubmit = async (data) => {
-    try {
-      if (user.length > 0) {
-        //   const response = await axios.post('http://192.168.1.105:1337/api/auth/local', {
-        //     identifier: data.email,
-        //     password: data.password,
-        //   });
-        //   const token = response.data.jwt;
-        //   console.log(jwt);
-        //   setIsAuthenticated(true);
-        //   if (isAuthenticated) {
-        navigation.navigate('RegisterPassword');
-        //   }
-      }
-    } catch (error) {
-      console.log(error);
+    if (user.length > 0) {
+      navigation.navigate('RegisterPassword', { email: user });
     }
   };
 
@@ -72,7 +59,7 @@ export default function RegisterEmail() {
           <Container>
             <StatusBar backgroundColor={'#fff'} barStyle="dark-content" />
             <BoxBack>
-              <Touch onPress={() => navigation.navigate('Pre')}>
+              <Touch onPress={() => navigation.goBack()}>
                 <Icone name="angle-left" />
               </Touch>
             </BoxBack>
@@ -105,7 +92,7 @@ export default function RegisterEmail() {
           backgroundColor={'azul'}
           name={t('Continuar')}
           onPress={handleSubmit(onSubmit)}
-          color={'#fff'}
+          color={'button'}
         />
       </BoxButtons>
     </>

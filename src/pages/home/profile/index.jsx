@@ -1,4 +1,4 @@
-import React, { useState, useContext } from 'react';
+import React, { useState, useContext, useEffect, useCallback } from 'react';
 import { StatusBar } from 'react-native';
 import {
   Box,
@@ -12,15 +12,31 @@ import {
   BoxModal,
   TrocarTheme,
   BoxInfos,
+  Teste,
+  Header,
+  TextHeader,
+  BoxButton,
+  BoxHeader,
+  BoxImgHeader,
+  HeaderOn,
+  ProfilePic,
 } from './style';
 import { useTranslation } from 'react-i18next';
-import { ThemeContext, ThemeProvider, ThemeType } from '../../../../src/theme/theme';
+import { ThemeContext, ThemeType } from '../../../../src/theme/theme';
 import '../../../../src/utils/i18n';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import { useNavigation, useIsFocused } from '@react-navigation/native';
+import BotaoImg from '../../../components/buttons/BotaoImg';
+import SvgMeninaAzul from '../../../../assets/img/imgs/meninaAzul';
+import SvgRedCap from '../../../../assets/img/imgs/redCap';
+import api from '../../../services/api';
 
 export default function Profile() {
   const { toggleTheme, thema } = useContext(ThemeContext);
-
+  const navigation = useNavigation();
   const isDarkMode = thema === ThemeType.dark;
+  const isFocused = useIsFocused();
+  const [token, setToken] = useState();
 
   const [modalVisible, setModalVisible] = useState(false);
   const { t, i18n } = useTranslation();
@@ -35,9 +51,67 @@ export default function Profile() {
       });
     setModalVisible(false);
   };
+  const clearAsyncStorage = async () => {
+    try {
+      await AsyncStorage.clear();
+      navigation.navigate('Profile');
+      console.log('AsyncStorage limpo com sucesso!');
+    } catch (error) {
+      console.log('Erro ao limpar o AsyncStorage:', error);
+    }
+  };
+
+  const checkTokenValidity = useCallback(async () => {
+    try {
+      const asyncToken = await AsyncStorage.getItem('token');
+      setToken(asyncToken);
+      if (asyncToken) {
+        try {
+          const response = await api.get('/users/');
+        } catch (error) {}
+      }
+    } catch (error) {
+      console.log('Erro ao verificar o token:', error);
+    }
+  }, []);
+
+  useEffect(() => {
+    if (isFocused) {
+      checkTokenValidity();
+    }
+  }, [isFocused, checkTokenValidity]);
 
   return (
     <Container>
+      {!!token ? (
+        <>
+          <HeaderOn>
+            <ProfilePic></ProfilePic>
+            <Title> {t('Teste')}</Title>
+          </HeaderOn>
+        </>
+      ) : (
+        <>
+          <Header>
+            <BoxHeader>
+              <TextHeader> Mantenha sua Pokédex atualizada e participe desse mundo.</TextHeader>
+              <BoxImgHeader>
+                <SvgMeninaAzul />
+                <SvgRedCap />
+              </BoxImgHeader>
+            </BoxHeader>
+            <BoxButton>
+              <BotaoImg
+                backgroundColor={'social'}
+                name={t('Entre ou Cadastre-se')}
+                onPress={() => navigation.navigate('Login')}
+                color={'azul'}
+                borderColor={'azul'}
+              />
+            </BoxButton>
+          </Header>
+        </>
+      )}
       <StatusBar backgroundColor={'#fff'} />
       <Container>
         <BoxDados>
@@ -74,14 +148,16 @@ export default function Profile() {
         <BoxModal>
           <Box>
             <Bti onPress={() => changeLanguage('pt')}>
-              <TextInformations> {t('Portugues')}</TextInformations>
+              <TextInformations> {t('Português')}</TextInformations>
             </Bti>
             <Bti onPress={() => changeLanguage('en')}>
-              <TextDados> {t('Ingles')}</TextDados>
+              <TextDados> {t('Inglês')}</TextDados>
             </Bti>
           </Box>
         </BoxModal>
       </Modal>
+
+      <Teste onPress={() => clearAsyncStorage()}></Teste>
     </Container>
   );
 }

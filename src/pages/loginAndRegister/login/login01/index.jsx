@@ -8,6 +8,7 @@ import {
   Text,
 } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 import {
   Container,
@@ -32,7 +33,7 @@ import { useTranslation } from 'react-i18next';
 import '../../../../utils/i18n';
 import Botao from '../../../../components/buttons';
 import Input from '../../../../components/inputs';
-import axios from 'axios';
+import api from '../../../../services/api';
 import InputPass from '../../../../components/inputs/inputPass';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
@@ -42,6 +43,7 @@ export default function Login01() {
   const navigation = useNavigation();
   const { t, i18n } = useTranslation();
   const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [jwt, setJwt] = useState();
 
   const signUpSchema = yup.object({
     email: yup.string().email(t('Informe um E-mail válido')).required(t('Digite seu E-mail')),
@@ -62,19 +64,19 @@ export default function Login01() {
   const onSubmit = async (data) => {
     try {
       if (user.length > 0 && pass.length > 0) {
-        const response = await axios.post('http://192.168.1.105:1337/api/auth/local', {
-          identifier: data.email,
-          password: data.password,
+        const response = await api.post('/auth/login', {
+          email: user,
+          password: pass,
         });
-        const token = response.data.jwt;
-        console.log(jwt);
-        setIsAuthenticated(true);
-        if (isAuthenticated) {
-          navigation.navigate('LoadSuccess');
-        }
+        const token = response.data.data.token;
+        await AsyncStorage.setItem('token', token); // Salvar o token no AsyncStorage
+        navigation.navigate('LoadSuccess');
       }
     } catch (error) {
-      console.log(error);
+      if (error) {
+        console.log(error);
+        alert('Senha ou usuário inválido');
+      }
     }
   };
 
@@ -85,7 +87,7 @@ export default function Login01() {
           <Container>
             <StatusBar backgroundColor={'#fff'} barStyle="dark-content" />
             <BoxBack>
-              <Touch onPress={() => navigation.navigate('Pre')}>
+              <Touch onPress={() => navigation.goBack()}>
                 <Icone name="angle-left" />
               </Touch>
             </BoxBack>
@@ -122,7 +124,7 @@ export default function Login01() {
               />
               {errors.password && <ErrorMsg01>{errors.password.message}</ErrorMsg01>}
             </BoxInputs>
-            <Forgot>
+            <Forgot onPress={() => navigation.navigate('ForgotPass')}>
               <TextForgot> {t('Esqueceu sua senha?')}</TextForgot>
             </Forgot>
           </Container>
@@ -134,7 +136,7 @@ export default function Login01() {
           backgroundColor={'azul'}
           name={t('Continuar com um e-mail')}
           onPress={handleSubmit(onSubmit)}
-          color={'#fff'}
+          color={'button'}
         />
       </BoxButtons>
     </>

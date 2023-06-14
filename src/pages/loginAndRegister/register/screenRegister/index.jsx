@@ -1,10 +1,9 @@
 import React from 'react';
-import { View, Image, StatusBar, Text, SafeAreaView, TouchableOpacity } from 'react-native';
+import { StatusBar } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 
 import SvgElite4 from '../../../../../assets/img/treinadores/elite4';
 import BotaoImg from '../../../../components/buttons/BotaoImg';
-import Botao from '../../../../components/buttons';
 import SvgApple from '../../../../../assets/img/icons/apple';
 import SvgGoogle from '../../../../../assets/img/icons/google';
 import {
@@ -54,17 +53,19 @@ export default function Create() {
           backgroundColor={'social'}
           name={t('Continuar com a Apple')}
           image={<SvgApple />}
+          color={'main'}
         />
         <BotaoImg
           backgroundColor={'social'}
           name={t('Continuar com o Google')}
           image={<SvgGoogle />}
+          color={'main'}
         />
         <But
           backgroundColor={'azul'}
           name={t('Continuar com um e-mail')}
           onPress={() => navigation.navigate('RegisterEmail')}
-          color={'#fff'}
+          color={'button'}
         />
       </BoxButtons>
     </Container>

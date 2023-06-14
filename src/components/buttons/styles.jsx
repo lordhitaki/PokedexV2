@@ -15,7 +15,8 @@ export const Button = styled.TouchableOpacity`
 export const TextButton = styled.Text`
   font-size: 18px;
   line-height: 27px;
-  color: ${(props) => props.color};
+  color: ${(props) =>
+    props.disabled ? props.theme.colorText.disable : props.theme.colorText[props.color]};
   text-align: center;
   font-family: 'Poppins-SemiBold';
 `;
@@ -27,14 +28,14 @@ export const ButtonSocial = styled.TouchableOpacity`
   justify-content: center;
   align-items: center;
   border-radius: 50px;
-  border-width: 1px;
-  border-color: #000;
+  border-width: 2px;
+  border-color: ${(props) => props.theme.borderButton[props.borderColor]};
   gap: 30px;
   background-color: ${(props) => props.theme.colorButton[props.backgroundColor]};
 `;
 
 export const TextSocial = styled.Text`
   font-size: 18px;
-  color: #000;
+  color: ${(props) => props.theme.colorText[props.color]};
   font-family: 'Poppins-SemiBold';
 `;

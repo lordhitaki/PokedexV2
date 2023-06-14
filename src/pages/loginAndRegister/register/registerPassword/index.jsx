@@ -7,7 +7,7 @@ import {
   KeyboardAvoidingView,
   Text,
 } from 'react-native';
-import { useNavigation } from '@react-navigation/native';
+import { useNavigation, useRoute } from '@react-navigation/native';
 
 import {
   Container,
@@ -42,7 +42,8 @@ export default function RegisterPassword() {
   const navigation = useNavigation();
   const { t, i18n } = useTranslation();
   const [isAuthenticated, setIsAuthenticated] = useState(false);
-  const [password, setPasswordError] = useState(false);
+  const route = useRoute();
+  const { email } = route.params;
 
   const signUpSchema = yup.object({
     password: yup.string().required(t('Informe sua senha!')).min(8),
@@ -61,19 +62,10 @@ export default function RegisterPassword() {
   const onSubmit = async (data) => {
     try {
       if (user.length > 0) {
-        setPasswordError(!!errors.password);
-        if (!errors.password) {
-          //   const response = await axios.post('http://192.168.1.105:1337/api/auth/local', {
-          //     identifier: data.email,
-          //     password: data.password,
-          //   });
-          //   const token = response.data.jwt;
-          //   console.log(jwt);
-          //   setIsAuthenticated(true);
-          //   if (isAuthenticated) {
-          navigation.navigate('RegisterUser');
-          //   }
-        }
+        navigation.navigate('RegisterUser', {
+          email: route.params.email,
+          password: user,
+        });
       }
     } catch (error) {
       console.log(error);
@@ -87,7 +79,7 @@ export default function RegisterPassword() {
           <Container>
             <StatusBar backgroundColor={'#fff'} barStyle="dark-content" />
             <BoxBack>
-              <Touch onPress={() => navigation.navigate('Pre')}>
+              <Touch onPress={() => navigation.goBack()}>
                 <Icone name="angle-left" />
               </Touch>
             </BoxBack>
@@ -121,7 +113,7 @@ export default function RegisterPassword() {
           backgroundColor={'azul'}
           name={t('Continuar')}
           onPress={handleSubmit(onSubmit)}
-          color={'#fff'}
+          color={'button'}
         />
       </BoxButtons>
     </>

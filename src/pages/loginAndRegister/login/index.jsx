@@ -51,13 +51,23 @@ export default function Login() {
         <TextDescrition>{t('Como deseja se conectar?')}</TextDescrition>
       </BoxDescrition>
       <BoxButtons>
-        <BotaoImg name={t('Continuar com a Apple')} image={<SvgApple />} />
-        <BotaoImg name={t('Continuar com o Google')} image={<SvgGoogle />} />
+        <BotaoImg
+          name={t('Continuar com a Apple')}
+          image={<SvgApple />}
+          borderColor={'black'}
+          color={'main'}
+        />
+        <BotaoImg
+          name={t('Continuar com o Google')}
+          image={<SvgGoogle />}
+          borderColor={'black'}
+          color={'main'}
+        />
         <But
           backgroundColor={'azul'}
           name={t('Continuar com um e-mail')}
           onPress={() => navigation.navigate('Login01')}
-          color={'#fff'}
+          color={'button'}
         />
       </BoxButtons>
     </Container>
