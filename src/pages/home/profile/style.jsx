@@ -16,7 +16,7 @@ export const Header = styled.View`
 export const HeaderOn = styled.View`
   background-color: ${(props) => props.theme.backgrounds.main};
   border-bottom-width: 1px;
-  border-color: #f2f2f2;
+  border-color: ${(props) => props.theme.colorText.sub};
   top: 0px;
   width: 100%;
   height: 67px;
@@ -60,7 +60,8 @@ export const BoxImgHeader = styled.View`
 export const Title = styled.Text`
   font-size: 20px;
   font-family: 'Poppins-SemiBold';
-  color: ${(props) => props.theme.colorText.main};
+  color: ${(props) => props.theme.colorText.text};
+  margin-top: 20px;
 `;
 
 export const Bti = styled.TouchableOpacity``;
@@ -74,12 +75,12 @@ export const Box = styled.View``;
 export const TextInformations = styled.Text`
   font-family: 'Poppins-SemiBold';
   font-size: 16px;
-  color: ${(props) => props.theme.colorText.main};
+  color: ${(props) => props.theme.colorText.text};
 `;
 export const TextDados = styled.Text`
   font-family: 'Poppins-Regular';
   font-size: 16px;
-  color: ${(props) => props.theme.colorText.main};
+  color: ${(props) => props.theme.colorText.text};
 `;
 
 export const Modal = styled.Modal`
@@ -99,6 +100,7 @@ export const TrocarTheme = styled.Switch`
 
 export const BoxInfos = styled.View`
   width: 80%;
+  margin-top: 10px;
 `;
 
 export const Teste = styled.TouchableOpacity`

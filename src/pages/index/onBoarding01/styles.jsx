@@ -20,7 +20,7 @@ export const BoxCenter = styled.View`
 export const TextCenter = styled.Text`
   font-family: 'Poppins-Medium';
   text-align: center;
-  color: ${(props) => props.theme.colorText.main};
+  color: ${(props) => props.theme.colorText.text};
   font-size: 32px;
 `;
 export const BoxText = styled.View`
@@ -32,7 +32,7 @@ export const BoxText = styled.View`
 export const MiniText = styled.Text`
   font-family: 'Poppins-Regular';
   text-align: center;
-  color: ${(props) => props.theme.colorText.main};
+  color: ${(props) => props.theme.colorText.text};
   font-size: 16px;
 `;
 export const BoxNext = styled.View`

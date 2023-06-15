@@ -24,11 +24,11 @@ export const Touch = styled.TouchableOpacity`
 export const SkipText = styled.Text`
   font-family: 'Poppins-Medium';
   font-size: 20px;
-  color: ${(props) => props.theme.colorText.main};
+  color: ${(props) => props.theme.colorText.text};
 `;
 
 export const Skip = styled(Icon)`
-  color: ${(props) => props.theme.colorText.main};
+  color: ${(props) => props.theme.colorText.text};
   font-size: 20px;
 `;
 
@@ -46,7 +46,7 @@ export const TextTitle = styled.Text`
   line-height: 39px;
   text-align: center;
   font-family: 'Poppins-Medium';
-  color: ${(props) => props.theme.colorText.main};
+  color: ${(props) => props.theme.colorText.text};
 `;
 
 export const BoxText = styled.View`
@@ -57,7 +57,7 @@ export const BoxText = styled.View`
 export const Desc = styled.Text`
   text-align: center;
   font-family: 'Poppins-Regular';
-  color: ${(props) => props.theme.colorText.main};
+  color: ${(props) => props.theme.colorText.text};
   font-size: 16px;
 `;
 

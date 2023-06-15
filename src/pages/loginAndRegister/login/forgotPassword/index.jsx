@@ -1,28 +1,12 @@
-import React, { useState, useEffect } from 'react';
-import { StatusBar, TouchableWithoutFeedback, Keyboard, KeyboardAvoidingView } from 'react-native';
-import { useNavigation, useRoute } from '@react-navigation/native';
+import React from 'react';
+import { TouchableWithoutFeedback, Keyboard, KeyboardAvoidingView } from 'react-native';
+import { useNavigation } from '@react-navigation/native';
 
-import {
-  Container,
-  BoxBack,
-  Touch,
-  BoxTextHeader,
-  TextCreate,
-  BoxButtons,
-  Icone,
-  BoxInputs,
-  BoxText,
-  Text02,
-  Text01,
-  TextInput,
-  Email,
-  ErrorMsg,
-} from './styles';
+import * as Styled from './styles';
 import { useTranslation } from 'react-i18next';
 import '../../../../utils/i18n';
 import Botao from '../../../../components/buttons';
 import Input from '../../../../components/inputs';
-import api from '../../../../services/api';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
@@ -30,7 +14,6 @@ import * as yup from 'yup';
 export default function ForgotPass() {
   const navigation = useNavigation();
   const { t, i18n } = useTranslation();
-  const [isAuthenticated, setIsAuthenticated] = useState(false);
 
   const signUpSchema = yup.object({
     email: yup.string().email(t('Informe um E-mail válido')).required(t('Digite seu E-mail')),
@@ -56,21 +39,20 @@ export default function ForgotPass() {
     <>
       <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
         <KeyboardAvoidingView behavior="height" style={{ flex: 1 }}>
-          <Container>
-            <StatusBar backgroundColor={'#fff'} barStyle="dark-content" />
-            <BoxBack>
-              <Touch onPress={() => navigation.goBack()}>
-                <Icone name="angle-left" />
-              </Touch>
-            </BoxBack>
-            <BoxTextHeader>
-              <TextCreate>{t('Esqueci minha senha')}</TextCreate>
-            </BoxTextHeader>
-            <BoxText>
-              <Text02>{t('Vamos recuperar!')}</Text02>
-              <Text01>{t('Qual é seu e-mail?')}</Text01>
-            </BoxText>
-            <BoxInputs>
+          <Styled.Container>
+            <Styled.BoxBack>
+              <Styled.Touch onPress={() => navigation.goBack()}>
+                <Styled.Icone name="angle-left" />
+              </Styled.Touch>
+            </Styled.BoxBack>
+            <Styled.BoxTextHeader>
+              <Styled.TextCreate>{t('Esqueci minha senha')}</Styled.TextCreate>
+            </Styled.BoxTextHeader>
+            <Styled.BoxText>
+              <Styled.Text02>{t('Vamos recuperar!')}</Styled.Text02>
+              <Styled.Text01>{t('Qual é seu e-mail?')}</Styled.Text01>
+            </Styled.BoxText>
+            <Styled.BoxInputs>
               <Input
                 control={control}
                 name="email"
@@ -78,15 +60,17 @@ export default function ForgotPass() {
                 placeholderTextColor={'#999999'}
                 errors={errors}
               />
-              {errors.email && <ErrorMsg>{errors.email.message}</ErrorMsg>}
-            </BoxInputs>
-            <Email>
-              <TextInput>{t('Vamos enviar um código de verificação para o seu e-mail.')}</TextInput>
-            </Email>
-          </Container>
+              {errors.email && <Styled.ErrorMsg>{errors.email.message}</Styled.ErrorMsg>}
+            </Styled.BoxInputs>
+            <Styled.Email>
+              <Styled.TextInput>
+                {t('Vamos enviar um código de verificação para o seu e-mail.')}
+              </Styled.TextInput>
+            </Styled.Email>
+          </Styled.Container>
         </KeyboardAvoidingView>
       </TouchableWithoutFeedback>
-      <BoxButtons>
+      <Styled.BoxButtons>
         <Botao
           disabled={user?.length > 0}
           backgroundColor={'azul'}
@@ -94,7 +78,7 @@ export default function ForgotPass() {
           onPress={handleSubmit(onSubmit)}
           color={'#fff'}
         />
-      </BoxButtons>
+      </Styled.BoxButtons>
     </>
   );
 }

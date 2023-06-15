@@ -1,27 +1,13 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { StatusBar } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 
 import SvgLogin from '../../../../assets/img/treinadores/Login';
-import Botao from '../../../components/buttons';
 import BotaoImg from '../../../components/buttons/BotaoImg';
 import SvgApple from '../../../../assets/img/icons/apple';
 import SvgGoogle from '../../../../assets/img/icons/google';
 
-import {
-  BoxBack,
-  BoxButtons,
-  BoxDescrition,
-  BoxImg,
-  BoxTextCenter,
-  BoxTextHeader,
-  Container,
-  Icone,
-  TextCenter,
-  TextCreate,
-  TextDescrition,
-  Touch,
-} from './styles';
+import * as Styled from './styles';
 import { useTranslation } from 'react-i18next';
 import '../../../utils/i18n';
 import But from '../../../components/buttons/but';
@@ -31,37 +17,38 @@ export default function Login() {
   const { t, i18n } = useTranslation();
 
   return (
-    <Container>
-      <StatusBar backgroundColor={'#fff'} barStyle="dark-content" />
-      <BoxBack>
-        <Touch onPress={() => navigation.navigate('Pre')}>
-          <Icone name="angle-left" />
-        </Touch>
-      </BoxBack>
-      <BoxTextHeader>
-        <TextCreate>{t('Entrar')}</TextCreate>
-      </BoxTextHeader>
-      <BoxImg>
+    <Styled.Container>
+      <Styled.BoxBack>
+        <Styled.Touch onPress={() => navigation.navigate('Pre')}>
+          <Styled.Icone name="angle-left" />
+        </Styled.Touch>
+      </Styled.BoxBack>
+      <Styled.BoxTextHeader>
+        <Styled.TextCreate>{t('Entrar')}</Styled.TextCreate>
+      </Styled.BoxTextHeader>
+      <Styled.BoxImg>
         <SvgLogin />
-      </BoxImg>
-      <BoxTextCenter>
-        <TextCenter>{t('Que bom te ver aqui novamente!')}</TextCenter>
-      </BoxTextCenter>
-      <BoxDescrition>
-        <TextDescrition>{t('Como deseja se conectar?')}</TextDescrition>
-      </BoxDescrition>
-      <BoxButtons>
+      </Styled.BoxImg>
+      <Styled.BoxTextCenter>
+        <Styled.TextCenter>{t('Que bom te ver aqui novamente!')}</Styled.TextCenter>
+      </Styled.BoxTextCenter>
+      <Styled.BoxDescrition>
+        <Styled.TextDescrition>{t('Como deseja se conectar?')}</Styled.TextDescrition>
+      </Styled.BoxDescrition>
+      <Styled.BoxButtons>
         <BotaoImg
           name={t('Continuar com a Apple')}
           image={<SvgApple />}
           borderColor={'black'}
-          color={'main'}
+          color={'button2'}
+          backgroundColor={'social'}
         />
         <BotaoImg
           name={t('Continuar com o Google')}
           image={<SvgGoogle />}
           borderColor={'black'}
-          color={'main'}
+          color={'button2'}
+          backgroundColor={'social'}
         />
         <But
           backgroundColor={'azul'}
@@ -69,7 +56,7 @@ export default function Login() {
           onPress={() => navigation.navigate('Login01')}
           color={'button'}
         />
-      </BoxButtons>
-    </Container>
+      </Styled.BoxButtons>
+    </Styled.Container>
   );
 }

@@ -22,7 +22,7 @@ export const Info = styled.Text`
   font-family: 'Poppins-SemiBold';
   font-size: 20px;
   text-align: center;
-  color: ${(props) => props.theme.colorText.main};
+  color: ${(props) => props.theme.colorText.text};
 `;
 
 export const BoxButton = styled.View`
@@ -34,4 +34,5 @@ export const SubInfo = styled.Text`
   font-family: 'Poppins-Regular';
   font-size: 14px;
   text-align: center;
+  color: ${(props) => props.theme.colorText.text};
 `;

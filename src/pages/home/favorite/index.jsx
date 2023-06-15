@@ -1,6 +1,4 @@
 import React, { useState, useEffect, useCallback } from 'react';
-import { StatusBar } from 'react-native';
-import { BoxButton, BoxImg, BoxText, Container, Info, SubInfo } from './style';
 import SvgDino from '../../../../assets/img/treinadores/dino';
 import { useTranslation } from 'react-i18next';
 import { useNavigation, useIsFocused } from '@react-navigation/native';
@@ -8,6 +6,7 @@ import BotaoImg from '../../../components/buttons/BotaoImg';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import SvgMagikarp from '../../../../assets/img/imgs/magikarp';
 import api from '../../../services/api';
+import * as Styled from './style';
 
 export default function Favorite() {
   const navigation = useNavigation();
@@ -38,45 +37,44 @@ export default function Favorite() {
 
   return (
     <>
-      <Container>
-        <StatusBar backgroundColor={'#fff'} />
+      <Styled.Container>
         {!!token ? (
           <>
-            <BoxImg>
+            <Styled.BoxImg>
               <SvgMagikarp />
-            </BoxImg>
-            <BoxText>
-              <Info>{t('Você não favoritou nenhum pokemon :(')}</Info>
-              <SubInfo>
+            </Styled.BoxImg>
+            <Styled.BoxText>
+              <Styled.Info>{t('Você não favoritou nenhum pokemon :(')}</Styled.Info>
+              <Styled.SubInfo>
                 {t('Clique no icone de coração dos seus pokemons favoritos e eles aparecerão')}
-              </SubInfo>
-            </BoxText>
+              </Styled.SubInfo>
+            </Styled.BoxText>
           </>
         ) : (
           <>
-            <BoxImg>
+            <Styled.BoxImg>
               <SvgDino />
-            </BoxImg>
-            <BoxText>
-              <Info>{t('Você precisa entrar em uma conta para fazer isso.')}</Info>
-              <SubInfo>
+            </Styled.BoxImg>
+            <Styled.BoxText>
+              <Styled.Info>{t('Você precisa entrar em uma conta para fazer isso.')}</Styled.Info>
+              <Styled.SubInfo>
                 {t(
                   'Para acessar essa funcionalidade, é necessário fazer login ou criar uma conta. Faça isso agora!'
                 )}
-              </SubInfo>
-            </BoxText>
-            <BoxButton>
+              </Styled.SubInfo>
+            </Styled.BoxText>
+            <Styled.BoxButton>
               <BotaoImg
                 backgroundColor={'social'}
                 name={t('Entre ou Cadastre-se')}
-                onPress={() => navigation.navigate('Login')}
+                onPress={() => navigation.navigate('Pre')}
                 color={'azul'}
                 borderColor={'azul'}
               />
-            </BoxButton>
+            </Styled.BoxButton>
           </>
         )}
-      </Container>
+      </Styled.Container>
     </>
   );
 }

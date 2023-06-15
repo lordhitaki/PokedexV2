@@ -1,26 +1,4 @@
 import React, { useState, useContext, useEffect, useCallback } from 'react';
-import { StatusBar } from 'react-native';
-import {
-  Box,
-  Container,
-  BoxDados,
-  Title,
-  Bti,
-  TextDados,
-  TextInformations,
-  Modal,
-  BoxModal,
-  TrocarTheme,
-  BoxInfos,
-  Teste,
-  Header,
-  TextHeader,
-  BoxButton,
-  BoxHeader,
-  BoxImgHeader,
-  HeaderOn,
-  ProfilePic,
-} from './style';
 import { useTranslation } from 'react-i18next';
 import { ThemeContext, ThemeType } from '../../../../src/theme/theme';
 import '../../../../src/utils/i18n';
@@ -30,13 +8,15 @@ import BotaoImg from '../../../components/buttons/BotaoImg';
 import SvgMeninaAzul from '../../../../assets/img/imgs/meninaAzul';
 import SvgRedCap from '../../../../assets/img/imgs/redCap';
 import api from '../../../services/api';
+import * as Styled from './style';
 
 export default function Profile() {
-  const { toggleTheme, thema } = useContext(ThemeContext);
+  const isDarkMode = theme === ThemeType.dark;
+  const { toggleTheme, theme } = useContext(ThemeContext);
   const navigation = useNavigation();
-  const isDarkMode = thema === ThemeType.dark;
   const isFocused = useIsFocused();
   const [token, setToken] = useState();
+  const [userData, setUserData] = useState(null);
 
   const [modalVisible, setModalVisible] = useState(false);
   const { t, i18n } = useTranslation();
@@ -53,8 +33,8 @@ export default function Profile() {
   };
   const clearAsyncStorage = async () => {
     try {
-      await AsyncStorage.clear();
-      navigation.navigate('Profile');
+      await AsyncStorage.removeItem('Token');
+      navigation.navigate('Pre');
       console.log('AsyncStorage limpo com sucesso!');
     } catch (error) {
       console.log('Erro ao limpar o AsyncStorage:', error);
@@ -68,6 +48,8 @@ export default function Profile() {
       if (asyncToken) {
         try {
           const response = await api.get('/users/');
+          const { name, email } = response.data.data.users[0];
+          setUserData({ name, email });
         } catch (error) {}
       }
     } catch (error) {
@@ -81,63 +63,99 @@ export default function Profile() {
     }
   }, [isFocused, checkTokenValidity]);
 
+  console.log(userData?.name);
   return (
-    <Container>
+    <Styled.Container>
       {!!token ? (
         <>
-          <HeaderOn>
-            <ProfilePic></ProfilePic>
-            <Title> {t('Teste')}</Title>
-          </HeaderOn>
+          <Styled.HeaderOn>
+            <Styled.ProfilePic></Styled.ProfilePic>
+            <Styled.Title> {t('Teste')}</Styled.Title>
+          </Styled.HeaderOn>
+          <Styled.Title> {t('Informações da conta')}</Styled.Title>
+          <Styled.BoxInfos>
+            <Styled.TextInformations> {t('Nome')}</Styled.TextInformations>
+            <Styled.TextDados>{userData?.name}</Styled.TextDados>
+            <Styled.TextInformations> {t('Email')}</Styled.TextInformations>
+            <Styled.TextDados>{userData?.email}</Styled.TextDados>
+            <Styled.TextInformations> {t('Senha')}</Styled.TextInformations>
+            <Styled.TextDados> {t('Teste')}</Styled.TextDados>
+          </Styled.BoxInfos>
+          <Styled.Container>
+            <Styled.BoxDados>
+              <Styled.BoxInfos>
+                <Styled.Title> {t('Escolha seu Tema')}</Styled.Title>
+                <Styled.TextDados> {t('Escolha se quer um tema escuro ou claro')}</Styled.TextDados>
+              </Styled.BoxInfos>
+              <Styled.TrocarTheme
+                trackColor={{ false: '#767577', true: '#5D78C0' }}
+                thumbColor={isDarkMode ? '#173EA5' : '#f4f3f4'}
+                ios_backgroundColor="#3e3e3e"
+                onValueChange={toggleTheme}
+                value={isDarkMode}
+              />
+            </Styled.BoxDados>
+            <Styled.Title> {t('Idioma')}</Styled.Title>
+            <Styled.Bti onPress={() => setModalVisible(true)}>
+              <Styled.BoxDados>
+                <Styled.Box>
+                  <Styled.TextInformations> {t('Idioma da interface')}</Styled.TextInformations>
+                  <Styled.TextDados> {i18n.language}</Styled.TextDados>
+                </Styled.Box>
+              </Styled.BoxDados>
+            </Styled.Bti>
+          </Styled.Container>
         </>
       ) : (
         <>
-          <Header>
-            <BoxHeader>
-              <TextHeader> Mantenha sua Pokédex atualizada e participe desse mundo.</TextHeader>
-              <BoxImgHeader>
+          <Styled.Header>
+            <Styled.BoxHeader>
+              <Styled.TextHeader>
+                {t('Mantenha sua Pokédex atualizada e participe desse mundo.')}
+              </Styled.TextHeader>
+              <Styled.BoxImgHeader>
                 <SvgMeninaAzul />
                 <SvgRedCap />
-              </BoxImgHeader>
-            </BoxHeader>
-            <BoxButton>
+              </Styled.BoxImgHeader>
+            </Styled.BoxHeader>
+            <Styled.BoxButton>
               <BotaoImg
                 backgroundColor={'social'}
                 name={t('Entre ou Cadastre-se')}
-                onPress={() => navigation.navigate('Login')}
+                onPress={() => navigation.navigate('Pre')}
                 color={'azul'}
                 borderColor={'azul'}
               />
-            </BoxButton>
-          </Header>
+            </Styled.BoxButton>
+          </Styled.Header>
+          <Styled.Container>
+            <Styled.BoxDados>
+              <Styled.BoxInfos>
+                <Styled.TextInformations> {t('Escolha seu Tema')}</Styled.TextInformations>
+                <Styled.TextDados> {t('Escolha se quer um tema escuro ou claro')}</Styled.TextDados>
+              </Styled.BoxInfos>
+              <Styled.TrocarTheme
+                trackColor={{ false: '#767577', true: '#5D78C0' }}
+                thumbColor={isDarkMode ? '#173EA5' : '#f4f3f4'}
+                ios_backgroundColor="#3e3e3e"
+                onValueChange={toggleTheme}
+                value={isDarkMode}
+              />
+            </Styled.BoxDados>
+            <Styled.Title> {t('Idioma')}</Styled.Title>
+            <Styled.Bti onPress={() => setModalVisible(true)}>
+              <Styled.BoxDados>
+                <Styled.Box>
+                  <Styled.TextInformations> {t('Idioma da interface')}</Styled.TextInformations>
+                  <Styled.TextDados> {i18n.language}</Styled.TextDados>
+                </Styled.Box>
+              </Styled.BoxDados>
+            </Styled.Bti>
+          </Styled.Container>
         </>
       )}
-      <StatusBar backgroundColor={'#fff'} />
-      <Container>
-        <BoxDados>
-          <BoxInfos>
-            <TextInformations> {t('Escolha seu Tema')}</TextInformations>
-            <TextDados> {t('Escolha se quer um tema escuro ou claro')}</TextDados>
-          </BoxInfos>
-          <TrocarTheme
-            trackColor={{ false: '#767577', true: '#5D78C0' }}
-            thumbColor={isDarkMode ? '#173EA5' : '#f4f3f4'}
-            ios_backgroundColor="#3e3e3e"
-            onValueChange={toggleTheme}
-            value={isDarkMode}
-          />
-        </BoxDados>
-        <Title> {t('Idioma')}</Title>
-        <Bti onPress={() => setModalVisible(true)}>
-          <BoxDados>
-            <Box>
-              <TextInformations> {t('Idioma da interface')}</TextInformations>
-              <TextDados> {i18n.language}</TextDados>
-            </Box>
-          </BoxDados>
-        </Bti>
-      </Container>
-      <Modal
+      <Styled.Container></Styled.Container>
+      <Styled.Modal
         animationType="slide"
         transparent={true}
         visible={modalVisible}
@@ -145,19 +163,18 @@ export default function Profile() {
           setModalVisible(!modalVisible);
         }}
       >
-        <BoxModal>
-          <Box>
-            <Bti onPress={() => changeLanguage('pt')}>
-              <TextInformations> {t('Português')}</TextInformations>
-            </Bti>
-            <Bti onPress={() => changeLanguage('en')}>
-              <TextDados> {t('Inglês')}</TextDados>
-            </Bti>
-          </Box>
-        </BoxModal>
-      </Modal>
-
-      <Teste onPress={() => clearAsyncStorage()}></Teste>
-    </Container>
+        <Styled.BoxModal>
+          <Styled.Box>
+            <Styled.Bti onPress={() => changeLanguage('pt')}>
+              <Styled.TextInformations> {t('Português')}</Styled.TextInformations>
+            </Styled.Bti>
+            <Styled.Bti onPress={() => changeLanguage('en')}>
+              <Styled.TextDados> {t('Inglês')}</Styled.TextDados>
+            </Styled.Bti>
+          </Styled.Box>
+        </Styled.BoxModal>
+      </Styled.Modal>
+      <Styled.Teste onPress={() => clearAsyncStorage()}></Styled.Teste>
+    </Styled.Container>
   );
 }

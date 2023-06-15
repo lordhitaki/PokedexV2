@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useContext } from 'react';
 import { StatusBar, TouchableWithoutFeedback, Keyboard, KeyboardAvoidingView } from 'react-native';
 import { useNavigation, useRoute } from '@react-navigation/native';
 
@@ -18,6 +18,7 @@ import {
   Email,
   ErrorMsg,
 } from './styles';
+import * as Styled from './styles';
 import { useTranslation } from 'react-i18next';
 import '../../../../utils/i18n';
 import Botao from '../../../../components/buttons';
@@ -30,7 +31,6 @@ import * as yup from 'yup';
 export default function RegisterEmail() {
   const navigation = useNavigation();
   const { t, i18n } = useTranslation();
-  const [isAuthenticated, setIsAuthenticated] = useState(false);
 
   const signUpSchema = yup.object({
     email: yup.string().email(t('Informe um E-mail válido')).required(t('Digite seu E-mail')),
@@ -56,20 +56,19 @@ export default function RegisterEmail() {
     <>
       <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
         <KeyboardAvoidingView behavior="height" style={{ flex: 1 }}>
-          <Container>
-            <StatusBar backgroundColor={'#fff'} barStyle="dark-content" />
-            <BoxBack>
-              <Touch onPress={() => navigation.goBack()}>
-                <Icone name="angle-left" />
-              </Touch>
-            </BoxBack>
-            <BoxTextHeader>
-              <TextCreate>{t('Criar conta')}</TextCreate>
-            </BoxTextHeader>
-            <BoxText>
-              <Text02>{t('Vamos começar!')}</Text02>
-              <Text01>{t('Qual é seu e-mail?')}</Text01>
-            </BoxText>
+          <Styled.Container>
+            <Styled.BoxBack>
+              <Styled.Touch onPress={() => navigation.goBack()}>
+                <Styled.Icone name="angle-left" />
+              </Styled.Touch>
+            </Styled.BoxBack>
+            <Styled.BoxTextHeader>
+              <Styled.TextCreate>{t('Criar conta')}</Styled.TextCreate>
+            </Styled.BoxTextHeader>
+            <Styled.BoxText>
+              <Styled.Text02>{t('Vamos começar!')}</Styled.Text02>
+              <Styled.Text01>{t('Qual é seu e-mail?')}</Styled.Text01>
+            </Styled.BoxText>
             <BoxInputs>
               <Input
                 control={control}
@@ -78,15 +77,15 @@ export default function RegisterEmail() {
                 placeholderTextColor={'#999999'}
                 errors={errors}
               />
-              {errors.email && <ErrorMsg>{errors.email.message}</ErrorMsg>}
+              {errors.email && <Styled.ErrorMsg>{errors.email.message}</Styled.ErrorMsg>}
             </BoxInputs>
-            <Email>
-              <TextInput>{t('Use um endereço de e-mail válido.')}</TextInput>
-            </Email>
-          </Container>
+            <Styled.Email>
+              <Styled.TextInput>{t('Use um endereço de e-mail válido.')}</Styled.TextInput>
+            </Styled.Email>
+          </Styled.Container>
         </KeyboardAvoidingView>
       </TouchableWithoutFeedback>
-      <BoxButtons>
+      <Styled.BoxButtons>
         <Botao
           disabled={user?.length > 0}
           backgroundColor={'azul'}
@@ -94,7 +93,7 @@ export default function RegisterEmail() {
           onPress={handleSubmit(onSubmit)}
           color={'button'}
         />
-      </BoxButtons>
+      </Styled.BoxButtons>
     </>
   );
 }

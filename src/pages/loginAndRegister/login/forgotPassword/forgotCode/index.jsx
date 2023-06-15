@@ -1,36 +1,19 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { StatusBar, TouchableWithoutFeedback, Keyboard, KeyboardAvoidingView } from 'react-native';
-import { useNavigation, useRoute } from '@react-navigation/native';
+import { useNavigation } from '@react-navigation/native';
 
-import {
-  Container,
-  BoxBack,
-  Touch,
-  BoxTextHeader,
-  TextCreate,
-  BoxButtons,
-  Icone,
-  BoxInputs,
-  BoxText,
-  Text02,
-  Text01,
-  TextInput,
-  Email,
-  ErrorMsg,
-} from './styles';
+import * as Styled from './styles';
 import { useTranslation } from 'react-i18next';
 import '../../../../../utils/i18n';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
 import Botao from '../../../../../components/buttons';
-import Input from '../../../../../components/inputs';
 import ConfirmationCodeInput from '../../../../../components/inputs/inputCode';
 
 export default function ForgotCode() {
   const navigation = useNavigation();
   const { t, i18n } = useTranslation();
-  const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [code, setCode] = useState();
 
   const signUpSchema = yup.object({
@@ -60,30 +43,31 @@ export default function ForgotCode() {
     <>
       <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
         <KeyboardAvoidingView behavior="height" style={{ flex: 1 }}>
-          <Container>
-            <StatusBar backgroundColor={'#fff'} barStyle="dark-content" />
-            <BoxBack>
-              <Touch onPress={() => navigation.goBack()}>
-                <Icone name="angle-left" />
-              </Touch>
-            </BoxBack>
-            <BoxTextHeader>
-              <TextCreate>{t('Esqueci minha senha')}</TextCreate>
-            </BoxTextHeader>
-            <BoxText>
-              <Text01>{t('Insirao código')}</Text01>
-              <Text02>{t('Digite o código de 6 digitos enviado para seu e-mail')}</Text02>
-            </BoxText>
-            <BoxInputs>
+          <Styled.Container>
+            <Styled.BoxBack>
+              <Styled.Touch onPress={() => navigation.goBack()}>
+                <Styled.Icone name="angle-left" />
+              </Styled.Touch>
+            </Styled.BoxBack>
+            <Styled.BoxTextHeader>
+              <Styled.TextCreate>{t('Esqueci minha senha')}</Styled.TextCreate>
+            </Styled.BoxTextHeader>
+            <Styled.BoxText>
+              <Styled.Text01>{t('Insirao código')}</Styled.Text01>
+              <Styled.Text02>
+                {t('Digite o código de 6 digitos enviado para seu e-mail')}
+              </Styled.Text02>
+            </Styled.BoxText>
+            <Styled.BoxInputs>
               <ConfirmationCodeInput numFields={6} onCodeFilled={handleCodeFilled} />
-            </BoxInputs>
-            <Email>
-              <TextInput>{t('Não recebeu o código?')}</TextInput>
-            </Email>
-          </Container>
+            </Styled.BoxInputs>
+            <Styled.Email>
+              <Styled.TextInput>{t('Não recebeu o código?')}</Styled.TextInput>
+            </Styled.Email>
+          </Styled.Container>
         </KeyboardAvoidingView>
       </TouchableWithoutFeedback>
-      <BoxButtons>
+      <Styled.BoxButtons>
         <Botao
           disabled={code?.length > 0}
           backgroundColor={'azul'}
@@ -91,7 +75,7 @@ export default function ForgotCode() {
           onPress={handleSubmit(onSubmit)}
           color={'#fff'}
         />
-      </BoxButtons>
+      </Styled.BoxButtons>
     </>
   );
 }

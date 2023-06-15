@@ -1,11 +1,11 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { StatusBar, Image } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
-import { BoxButton, BoxCenterImg, BoxImg, BoxText, Container, Img, Msg, SubMsg } from './styles';
 import { useTranslation } from 'react-i18next';
 import '../../../../utils/i18n';
 import SvgLoadSucess from '../../../../../assets/img/icons/loadSuccess';
 import But from '../../../../components/buttons/but';
+import * as Styled from './styles';
 
 export default function RegisterSuccess() {
   const navigation = useNavigation();
@@ -13,29 +13,30 @@ export default function RegisterSuccess() {
 
   return (
     <>
-      <Container>
-        <StatusBar backgroundColor={'#fff'} barStyle="dark-content" />
-        <BoxImg>
+      <Styled.Container>
+        <Styled.BoxImg>
           <SvgLoadSucess />
-        </BoxImg>
-        <BoxCenterImg>
-          <Img source={require('../../../../../assets/img/treinadores/registerComplet.png')} />
-        </BoxCenterImg>
-        <BoxText>
-          <Msg>{t('Sua Conta Foi Criada com Sucesso!')}</Msg>
-          <SubMsg>
+        </Styled.BoxImg>
+        <Styled.BoxCenterImg>
+          <Styled.Img
+            source={require('../../../../../assets/img/treinadores/registerComplet.png')}
+          />
+        </Styled.BoxCenterImg>
+        <Styled.BoxText>
+          <Styled.Msg>{t('Sua Conta Foi Criada com Sucesso!')}</Styled.Msg>
+          <Styled.SubMsg>
             {t('Seja bem-vindo, treinador! Estamos animados para acompnhar sua jornada.')}
-          </SubMsg>
-        </BoxText>
-      </Container>
-      <BoxButton>
-        <But
-          backgroundColor={'azul'}
-          name={t('Continuar')}
-          onPress={() => navigation.navigate('Login')}
-          color={'button'}
-        />
-      </BoxButton>
+          </Styled.SubMsg>
+        </Styled.BoxText>
+        <Styled.BoxButton>
+          <But
+            backgroundColor={'azul'}
+            name={t('Continuar')}
+            onPress={() => navigation.navigate('Login')}
+            color={'button'}
+          />
+        </Styled.BoxButton>
+      </Styled.Container>
     </>
   );
 }

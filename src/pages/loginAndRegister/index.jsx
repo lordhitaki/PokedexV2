@@ -1,29 +1,13 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { StatusBar } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
-import {
-  BoxButton,
-  BoxImg,
-  BoxLogin,
-  BoxSkip,
-  BoxText,
-  BoxTitle,
-  ButtonLogin,
-  Container,
-  Desc,
-  Skip,
-  SkipText,
-  TextLogin,
-  TextTitle,
-  Touch,
-} from './styles';
+import * as Styled from './styles';
 import { useTranslation } from 'react-i18next';
 import '../../../src/utils/i18n';
 
 import SvgMennaAzul from '../../../assets/img/treinadores/meninaAzul';
 import SvgBoneRed from '../../../assets/img/treinadores/boneRed';
 
-import Botao from '../../components/buttons';
 import But from '../../components/buttons/but';
 
 export default function Pre() {
@@ -31,37 +15,38 @@ export default function Pre() {
   const { t, i18n } = useTranslation();
 
   return (
-    <Container>
-      <StatusBar backgroundColor={'#fff'} barStyle="dark-content" />
-      <BoxSkip>
-        <Touch onPress={() => navigation.navigate('Pokedex')}>
-          <SkipText>{t('Pular')}</SkipText>
-          <Skip name="arrow-right" />
-        </Touch>
-      </BoxSkip>
-      <BoxImg>
+    <Styled.Container>
+      <Styled.BoxSkip>
+        <Styled.Touch onPress={() => navigation.navigate('Home')}>
+          <Styled.SkipText>{t('Pular')}</Styled.SkipText>
+          <Styled.Skip name="arrow-right" />
+        </Styled.Touch>
+      </Styled.BoxSkip>
+      <Styled.BoxImg>
         <SvgMennaAzul />
         <SvgBoneRed />
-      </BoxImg>
-      <BoxTitle>
-        <TextTitle>{t('Está Pronto para essa aventura?')}</TextTitle>
-      </BoxTitle>
-      <BoxText>
-        <Desc>{t('Basta criar uma conta e começar a explorar o mundo dos Pokemons hoje!')}</Desc>
-      </BoxText>
-      <BoxButton>
+      </Styled.BoxImg>
+      <Styled.BoxTitle>
+        <Styled.TextTitle>{t('Está Pronto para essa aventura?')}</Styled.TextTitle>
+      </Styled.BoxTitle>
+      <Styled.BoxText>
+        <Styled.Desc>
+          {t('Basta criar uma conta e começar a explorar o mundo dos Pokemons hoje!')}
+        </Styled.Desc>
+      </Styled.BoxText>
+      <Styled.BoxButton>
         <But
           name={t('Criar conta')}
           color={'button'}
           onPress={() => navigation.navigate('Create')}
           backgroundColor="azul"
         />
-      </BoxButton>
-      <BoxLogin>
-        <ButtonLogin onPress={() => navigation.navigate('Login')}>
-          <TextLogin> {t('Ja tenho uma conta')}</TextLogin>
-        </ButtonLogin>
-      </BoxLogin>
-    </Container>
+      </Styled.BoxButton>
+      <Styled.BoxLogin>
+        <Styled.ButtonLogin onPress={() => navigation.navigate('Login')}>
+          <Styled.TextLogin> {t('Ja tenho uma conta')}</Styled.TextLogin>
+        </Styled.ButtonLogin>
+      </Styled.BoxLogin>
+    </Styled.Container>
   );
 }

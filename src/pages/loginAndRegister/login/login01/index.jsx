@@ -1,34 +1,9 @@
-import React, { useState, useEffect } from 'react';
-import {
-  StatusBar,
-  View,
-  TouchableWithoutFeedback,
-  Keyboard,
-  KeyboardAvoidingView,
-  Text,
-} from 'react-native';
+import React, { useState, useContext } from 'react';
+import { TouchableWithoutFeedback, Keyboard, KeyboardAvoidingView } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
-import {
-  Container,
-  BoxBack,
-  Touch,
-  BoxTextHeader,
-  TextCreate,
-  BoxButtons,
-  Icone,
-  BoxInputs,
-  BoxText,
-  Text02,
-  Text01,
-  TextInput,
-  Email,
-  TextForgot,
-  Forgot,
-  ErrorMsg,
-  ErrorMsg01,
-} from './styles';
+import * as Styled from './styles';
 import { useTranslation } from 'react-i18next';
 import '../../../../utils/i18n';
 import Botao from '../../../../components/buttons';
@@ -42,8 +17,6 @@ import * as yup from 'yup';
 export default function Login01() {
   const navigation = useNavigation();
   const { t, i18n } = useTranslation();
-  const [isAuthenticated, setIsAuthenticated] = useState(false);
-  const [jwt, setJwt] = useState();
 
   const signUpSchema = yup.object({
     email: yup.string().email(t('Informe um E-mail válido')).required(t('Digite seu E-mail')),
@@ -69,7 +42,7 @@ export default function Login01() {
           password: pass,
         });
         const token = response.data.data.token;
-        await AsyncStorage.setItem('token', token); // Salvar o token no AsyncStorage
+        await AsyncStorage.setItem('token', token);
         navigation.navigate('LoadSuccess');
       }
     } catch (error) {
@@ -84,24 +57,23 @@ export default function Login01() {
     <>
       <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
         <KeyboardAvoidingView behavior="height" style={{ flex: 1 }}>
-          <Container>
-            <StatusBar backgroundColor={'#fff'} barStyle="dark-content" />
-            <BoxBack>
-              <Touch onPress={() => navigation.goBack()}>
-                <Icone name="angle-left" />
-              </Touch>
-            </BoxBack>
-            <BoxTextHeader>
-              <TextCreate>{t('Entrar')}</TextCreate>
-            </BoxTextHeader>
-            <BoxText>
-              <Text02>{t('Bem Vindo de Volta!')}</Text02>
-              <Text01>{t('Preencha os dados')}</Text01>
-            </BoxText>
-            <Email>
-              <TextInput>{t('E-mail')}</TextInput>
-            </Email>
-            <BoxInputs>
+          <Styled.Container>
+            <Styled.BoxBack>
+              <Styled.Touch onPress={() => navigation.goBack()}>
+                <Styled.Icone name="angle-left" />
+              </Styled.Touch>
+            </Styled.BoxBack>
+            <Styled.BoxTextHeader>
+              <Styled.TextCreate>{t('Entrar')}</Styled.TextCreate>
+            </Styled.BoxTextHeader>
+            <Styled.BoxText>
+              <Styled.Text02>{t('Bem Vindo de Volta!')}</Styled.Text02>
+              <Styled.Text01>{t('Preencha os dados')}</Styled.Text01>
+            </Styled.BoxText>
+            <Styled.Email>
+              <Styled.TextInput>{t('E-mail')}</Styled.TextInput>
+            </Styled.Email>
+            <Styled.BoxInputs>
               <Input
                 control={control}
                 name="email"
@@ -109,12 +81,12 @@ export default function Login01() {
                 placeholderTextColor={'#999999'}
                 errors={errors}
               />
-              {errors.email && <ErrorMsg>{errors.email.message}</ErrorMsg>}
-            </BoxInputs>
-            <Email>
-              <TextInput>{t('Senha')}</TextInput>
-            </Email>
-            <BoxInputs>
+              {errors.email && <Styled.ErrorMsg>{errors.email.message}</Styled.ErrorMsg>}
+            </Styled.BoxInputs>
+            <Styled.Email>
+              <Styled.TextInput>{t('Senha')}</Styled.TextInput>
+            </Styled.Email>
+            <Styled.BoxInputs>
               <InputPass
                 control={control}
                 name="password"
@@ -122,15 +94,15 @@ export default function Login01() {
                 placeholderTextColor={'#999999'}
                 errors={errors}
               />
-              {errors.password && <ErrorMsg01>{errors.password.message}</ErrorMsg01>}
-            </BoxInputs>
-            <Forgot onPress={() => navigation.navigate('ForgotPass')}>
-              <TextForgot> {t('Esqueceu sua senha?')}</TextForgot>
-            </Forgot>
-          </Container>
+              {errors.password && <Styled.ErrorMsg01>{errors.password.message}</Styled.ErrorMsg01>}
+            </Styled.BoxInputs>
+            <Styled.Forgot onPress={() => navigation.navigate('ForgotPass')}>
+              <Styled.TextForgot> {t('Esqueceu sua senha?')}</Styled.TextForgot>
+            </Styled.Forgot>
+          </Styled.Container>
         </KeyboardAvoidingView>
       </TouchableWithoutFeedback>
-      <BoxButtons>
+      <Styled.BoxButtons>
         <Botao
           disabled={user?.length > 0 && pass?.length > 0}
           backgroundColor={'azul'}
@@ -138,7 +110,7 @@ export default function Login01() {
           onPress={handleSubmit(onSubmit)}
           color={'button'}
         />
-      </BoxButtons>
+      </Styled.BoxButtons>
     </>
   );
 }

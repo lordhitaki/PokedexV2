@@ -1,20 +1,11 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import { StatusBar } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import AppIntroSlider from 'react-native-app-intro-slider';
 import { useTranslation } from 'react-i18next';
 import '../../../../src/utils/i18n';
+import * as Styled from './styles';
 
-import {
-  Container,
-  BoxLogo,
-  BoxCenter,
-  TextCenter,
-  MiniText,
-  BoxNext,
-  TextButtonNext,
-  BoxText,
-} from './styles';
 import SvgIndex from '../../../../assets/img/treinadores';
 import SvgMeninaRosa from '../../../../assets/img/treinadores/meninaRosa';
 
@@ -42,16 +33,15 @@ export default function Index() {
 
   function renderSlides({ item }) {
     return (
-      <Container>
-        <StatusBar backgroundColor={'#fff'} barStyle="dark-content" />
-        <BoxLogo>{item.image}</BoxLogo>
-        <BoxCenter>
-          <TextCenter>{item.title}</TextCenter>
-        </BoxCenter>
-        <BoxText>
-          <MiniText>{item.text}</MiniText>
-        </BoxText>
-      </Container>
+      <Styled.Container>
+        <Styled.BoxLogo>{item.image}</Styled.BoxLogo>
+        <Styled.BoxCenter>
+          <Styled.TextCenter>{item.title}</Styled.TextCenter>
+        </Styled.BoxCenter>
+        <Styled.BoxText>
+          <Styled.MiniText>{item.text}</Styled.MiniText>
+        </Styled.BoxText>
+      </Styled.Container>
     );
   }
 
@@ -71,14 +61,14 @@ export default function Index() {
         bottom: 110,
       }}
       renderNextButton={() => (
-        <BoxNext>
-          <TextButtonNext> {t('Continuar')}</TextButtonNext>
-        </BoxNext>
+        <Styled.BoxNext>
+          <Styled.TextButtonNext> {t('Continuar')}</Styled.TextButtonNext>
+        </Styled.BoxNext>
       )}
       renderDoneButton={() => (
-        <BoxNext>
-          <TextButtonNext> {t('Vamos Começar!')}</TextButtonNext>
-        </BoxNext>
+        <Styled.BoxNext>
+          <Styled.TextButtonNext> {t('Vamos Começar!')}</Styled.TextButtonNext>
+        </Styled.BoxNext>
       )}
       onDone={() => navigation.navigate('Pre')}
     />

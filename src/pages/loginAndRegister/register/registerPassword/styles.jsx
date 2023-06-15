@@ -16,7 +16,7 @@ export const Touch = styled.TouchableOpacity``;
 
 export const Icone = styled(Icon)`
   font-size: 30px;
-  color: ${(props) => props.theme.colorText.main};
+  color: ${(props) => props.theme.colorText.text};
 `;
 
 export const BoxTextHeader = styled.View`
@@ -26,7 +26,7 @@ export const BoxTextHeader = styled.View`
 export const TextCreate = styled.Text`
   font-family: 'Poppins-SemiBold';
   font-size: 24px;
-  color: ${(props) => props.theme.colorText.main};
+  color: ${(props) => props.theme.colorText.text};
 `;
 
 export const BoxText = styled.View`
@@ -45,7 +45,7 @@ export const Text01 = styled.Text`
   font-family: 'Poppins-SemiBold';
   font-size: 30px;
   text-align: center;
-  color: ${(props) => props.theme.colorText.main};
+  color: ${(props) => props.theme.colorText.text};
 `;
 
 export const BoxInputs = styled.View`
@@ -87,10 +87,10 @@ export const BoxButtons = styled.View`
 `;
 
 export const ErrorMsg = styled.Text`
-  color: red;
+  color: ${(props) => props.theme.colorText.erro};
   bottom: 10px;
 `;
 export const ErrorMsg01 = styled.Text`
-  color: red;
+  color: ${(props) => props.theme.colorText.erro};
   bottom: 18px;
 `;

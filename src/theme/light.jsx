@@ -3,11 +3,13 @@ export default {
     main: '#fff',
   },
   colorText: {
-    main: '#121212',
+    text: '#121212',
     button: '#fff',
     sub: '#4d4d4d',
     azul: '#173EA5',
     disable: '#999999',
+    button2: '#000',
+    erro: '#f32800',
   },
   colorButton: {
     azul: '#173EA5',

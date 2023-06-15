@@ -26,7 +26,7 @@ export const Msg = styled.Text`
   text-align: center;
   font-family: 'Poppins-Medium';
   font-size: 26px;
-  color: ${(props) => props.theme.colorText.main};
+  color: ${(props) => props.theme.colorText.text};
   margin-bottom: 10px;
 `;
 
@@ -38,7 +38,8 @@ export const SubMsg = styled.Text`
   margin-top: 10px;
 `;
 export const BoxButton = styled.View`
+  position: absolute;
   width: 90%;
-  bottom: 20px;
+  bottom: 40px;
   left: 20px;
 `;

@@ -7,5 +7,5 @@ export const Container = styled.View`
 
 export const Texto = styled.Text`
   font-size: 20px;
-  color: ${(props) => props.theme.colorText.main};
+  color: ${(props) => props.theme.colorText.text};
 `;

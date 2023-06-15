@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useContext } from 'react';
 import {
   StatusBar,
   View,
@@ -9,30 +9,10 @@ import {
 } from 'react-native';
 import { useNavigation, useRoute } from '@react-navigation/native';
 
-import {
-  Container,
-  BoxBack,
-  Touch,
-  BoxTextHeader,
-  TextCreate,
-  BoxButtons,
-  Icone,
-  BoxInputs,
-  BoxText,
-  Text02,
-  Text01,
-  TextInput,
-  Email,
-  TextForgot,
-  Forgot,
-  ErrorMsg,
-  ErrorMsg01,
-} from './styles';
+import * as Styled from './styles';
 import { useTranslation } from 'react-i18next';
 import '../../../../utils/i18n';
 import Botao from '../../../../components/buttons';
-import Input from '../../../../components/inputs';
-import axios from 'axios';
 import InputPass from '../../../../components/inputs/inputPass';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
@@ -41,7 +21,6 @@ import * as yup from 'yup';
 export default function RegisterPassword() {
   const navigation = useNavigation();
   const { t, i18n } = useTranslation();
-  const [isAuthenticated, setIsAuthenticated] = useState(false);
   const route = useRoute();
   const { email } = route.params;
 
@@ -76,21 +55,20 @@ export default function RegisterPassword() {
     <>
       <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
         <KeyboardAvoidingView behavior="height" style={{ flex: 1 }}>
-          <Container>
-            <StatusBar backgroundColor={'#fff'} barStyle="dark-content" />
-            <BoxBack>
-              <Touch onPress={() => navigation.goBack()}>
-                <Icone name="angle-left" />
-              </Touch>
-            </BoxBack>
-            <BoxTextHeader>
-              <TextCreate>{t('Criar conta')}</TextCreate>
-            </BoxTextHeader>
-            <BoxText>
-              <Text02>{t('Agora...')}</Text02>
-              <Text01>{t('Crie uma senha')}</Text01>
-            </BoxText>
-            <BoxInputs>
+          <Styled.Container>
+            <Styled.BoxBack>
+              <Styled.Touch onPress={() => navigation.goBack()}>
+                <Styled.Icone name="angle-left" />
+              </Styled.Touch>
+            </Styled.BoxBack>
+            <Styled.BoxTextHeader>
+              <Styled.TextCreate>{t('Criar conta')}</Styled.TextCreate>
+            </Styled.BoxTextHeader>
+            <Styled.BoxText>
+              <Styled.Text02>{t('Agora...')}</Styled.Text02>
+              <Styled.Text01>{t('Crie uma senha')}</Styled.Text01>
+            </Styled.BoxText>
+            <Styled.BoxInputs>
               <InputPass
                 control={control}
                 name="password"
@@ -98,16 +76,16 @@ export default function RegisterPassword() {
                 placeholderTextColor={'#999999'}
                 errors={errors}
               />
-            </BoxInputs>
-            <Email>
-              <TextInput hasError={!!errors.password}>
+            </Styled.BoxInputs>
+            <Styled.Email>
+              <Styled.TextInput hasError={!!errors.password}>
                 {t('Sua Senha deve ter pelo menos 8 caracteres')}
-              </TextInput>
-            </Email>
-          </Container>
+              </Styled.TextInput>
+            </Styled.Email>
+          </Styled.Container>
         </KeyboardAvoidingView>
       </TouchableWithoutFeedback>
-      <BoxButtons>
+      <Styled.BoxButtons>
         <Botao
           disabled={user?.length > 0}
           backgroundColor={'azul'}
@@ -115,7 +93,7 @@ export default function RegisterPassword() {
           onPress={handleSubmit(onSubmit)}
           color={'button'}
         />
-      </BoxButtons>
+      </Styled.BoxButtons>
     </>
   );
 }

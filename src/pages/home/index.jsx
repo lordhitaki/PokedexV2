@@ -1,5 +1,4 @@
 import React, { useContext, useEffect } from 'react';
-import { StatusBar, TouchableOpacity, Text } from 'react-native';
 import { Container } from './style';
 import { useNavigation, useFocusEffect } from '@react-navigation/native';
 
@@ -7,9 +6,9 @@ import TabRoute from '../../routes/tabBar';
 
 export default function Home() {
   const navigation = useNavigation();
+
   useEffect(() => {
     // Aqui você pode adicionar qualquer lógica que deseja executar ao recarregar a tela
-    console.log('Tela recarregada');
   }, [navigation.isFocused()]);
 
   useFocusEffect(() => {
@@ -18,7 +17,6 @@ export default function Home() {
   });
   return (
     <Container>
-      <StatusBar backgroundColor={'#fff'} />
       <TabRoute />
     </Container>
   );

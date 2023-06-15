@@ -15,7 +15,7 @@ export const Inp = styled.TextInput`
 
 export const Icone = styled(Icon)`
   font-size: 20px;
-  color: ${(props) => props.theme.colorText.main};
+  color: ${(props) => props.theme.colorText.text};
   position: absolute;
   bottom: 25px;
   left: 150px;
