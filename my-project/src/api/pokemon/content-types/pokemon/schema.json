@@ -1,0 +1,127 @@
+{
+  "kind": "collectionType",
+  "collectionName": "pokemons",
+  "info": {
+    "singularName": "pokemon",
+    "pluralName": "pokemons",
+    "displayName": "Pokemon",
+    "description": ""
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "name": {
+      "type": "string"
+    },
+    "description": {
+      "type": "string"
+    },
+    "images": {
+      "type": "media",
+      "multiple": true,
+      "required": false,
+      "allowedTypes": [
+        "images",
+        "files",
+        "videos",
+        "audios"
+      ]
+    },
+    "line_evolutions": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::line-evolution.line-evolution"
+    },
+    "background": {
+      "type": "media",
+      "multiple": false,
+      "required": false,
+      "allowedTypes": [
+        "images",
+        "files",
+        "videos",
+        "audios"
+      ]
+    },
+    "types": {
+      "type": "media",
+      "multiple": true,
+      "required": false,
+      "allowedTypes": [
+        "images",
+        "files",
+        "videos",
+        "audios"
+      ]
+    },
+    "weakness": {
+      "type": "media",
+      "multiple": true,
+      "required": false,
+      "allowedTypes": [
+        "images",
+        "files",
+        "videos",
+        "audios"
+      ]
+    },
+    "cardColor": {
+      "type": "string"
+    },
+    "tipos": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::tipo.tipo"
+    },
+    "header": {
+      "type": "media",
+      "multiple": true,
+      "required": false,
+      "allowedTypes": [
+        "images",
+        "files",
+        "videos",
+        "audios"
+      ]
+    },
+    "ATK": {
+      "type": "string"
+    },
+    "DEF": {
+      "type": "string"
+    },
+    "HP": {
+      "type": "string"
+    },
+    "SPEED": {
+      "type": "string"
+    },
+    "card": {
+      "type": "media",
+      "multiple": true,
+      "required": false,
+      "allowedTypes": [
+        "images",
+        "files",
+        "videos",
+        "audios"
+      ]
+    },
+    "typeEvos": {
+      "type": "media",
+      "multiple": true,
+      "required": false,
+      "allowedTypes": [
+        "images",
+        "files",
+        "videos",
+        "audios"
+      ]
+    },
+    "num": {
+      "type": "string"
+    }
+  }
+}

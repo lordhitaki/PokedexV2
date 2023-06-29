@@ -1,4 +1,4 @@
-import React, { useState, useContext } from 'react';
+import React from 'react';
 import { TouchableWithoutFeedback, Keyboard, KeyboardAvoidingView } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
@@ -42,7 +42,10 @@ export default function Login01() {
           password: pass,
         });
         const token = response.data.data.token;
-        await AsyncStorage.setItem('token', token);
+        const ID = response.data.data.user._id;
+        console.log(ID);
+        await AsyncStorage.setItem('ID', ID);
+        await AsyncStorage.setItem('Token', token);
         navigation.navigate('LoadSuccess');
       }
     } catch (error) {

@@ -1,13 +1,15 @@
 import React from 'react';
-import { View, Image, StatusBar } from 'react-native';
-import styles from './styles';
+import { StatusBar, ActivityIndicator } from 'react-native';
 import SvgSplash from '../../assets/img/icons/splash';
+
+import * as Styled from './styles';
 
 export default function SplashScreen() {
   return (
-    <View style={styles.splash}>
+    <Styled.Container>
       <StatusBar backgroundColor={'#000029'} barStyle="ligth-content" />
       <SvgSplash />
-    </View>
+      <ActivityIndicator size="large" color="#FFFFFF" />
+    </Styled.Container>
   );
 }

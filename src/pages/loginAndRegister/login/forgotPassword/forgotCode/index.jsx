@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import { StatusBar, TouchableWithoutFeedback, Keyboard, KeyboardAvoidingView } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
-
 import * as Styled from './styles';
 import { useTranslation } from 'react-i18next';
 import '../../../../../utils/i18n';
@@ -73,7 +72,7 @@ export default function ForgotCode() {
           backgroundColor={'azul'}
           name={t('Continuar')}
           onPress={handleSubmit(onSubmit)}
-          color={'#fff'}
+          color={'button'}
         />
       </Styled.BoxButtons>
     </>

@@ -31,7 +31,7 @@ export default function ForgotPass() {
   const user = watch('email');
   const onSubmit = async (data) => {
     if (user.length > 0) {
-      navigation.navigate('RegisterPassword', { email: user });
+      navigation.navigate('ForgotCode', { email: user });
     }
   };
 
@@ -76,7 +76,7 @@ export default function ForgotPass() {
           backgroundColor={'azul'}
           name={t('Continuar')}
           onPress={handleSubmit(onSubmit)}
-          color={'#fff'}
+          color={'button'}
         />
       </Styled.BoxButtons>
     </>

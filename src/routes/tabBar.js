@@ -1,5 +1,4 @@
 import React, { useContext } from 'react';
-import { Image } from 'react-native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { useTranslation } from 'react-i18next';
 import '../../src/utils/i18n';
@@ -18,6 +17,7 @@ import SvgFavoritos from '../../assets/img/icons/favoritos';
 import SvgPerilOn from '../../assets/img/icons/perfilOn';
 import Svgperfil from '../../assets/img/icons/perfil';
 import { ThemeContext, ThemeType } from '../theme/theme';
+import SvgTabFav from '../../assets/img/icons/tabFavorite';
 
 const Tab = createBottomTabNavigator();
 
@@ -28,8 +28,8 @@ export default function TabRoute() {
   return (
     <Tab.Navigator
       screenOptions={{
-        tabBarInactiveBackgroundColor: theme === ThemeType.dark ? '#fff' : '#121212',
-        tabBarActiveBackgroundColor: theme === ThemeType.dark ? '#fff' : '#121212',
+        tabBarInactiveBackgroundColor: theme === ThemeType.dark ? '#121212' : '#fff',
+        tabBarActiveBackgroundColor: theme === ThemeType.dark ? '#121212' : '#fff',
         tabBarActiveTintColor: 'red',
         headerShown: false,
       }}
@@ -58,9 +58,9 @@ export default function TabRoute() {
             return <SvgRegiao />;
           },
           headerStyle: {
-            backgroundColor: theme === ThemeType.dark ? '#fff' : '#121212',
+            backgroundColor: theme === ThemeType.dark ? '#121212' : '#fff',
           },
-          headerTintColor: theme === ThemeType.dark ? '#121212' : '#fff',
+          headerTintColor: theme === ThemeType.dark ? '#fff' : '#121212',
         }}
       />
       <Tab.Screen
@@ -72,12 +72,12 @@ export default function TabRoute() {
             if (focused) {
               return <SvgFavoritosOn />;
             }
-            return <SvgFavoritos />;
+            return <SvgTabFav />;
           },
           headerStyle: {
-            backgroundColor: theme === ThemeType.dark ? '#fff' : '#121212',
+            backgroundColor: theme === ThemeType.dark ? '#121212' : '#fff',
           },
-          headerTintColor: theme === ThemeType.dark ? '#121212' : '#fff',
+          headerTintColor: theme === ThemeType.dark ? '#fff' : '#121212',
         }}
       />
       <Tab.Screen

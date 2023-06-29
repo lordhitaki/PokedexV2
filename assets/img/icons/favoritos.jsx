@@ -1,25 +1,25 @@
-import * as React from "react"
-import Svg, { Path } from "react-native-svg"
+import * as React from 'react';
+import Svg, { Path } from 'react-native-svg';
 
 function SvgFavoritos(props) {
   return (
     <Svg
-      width={24}
-      height={24}
-      viewBox="0 0 24 24"
+      width={34}
+      height={34}
+      viewBox="0 0 34 34"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
       {...props}
     >
       <Path
-        d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.501 5.501 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78v0z"
-        stroke="gray"
-        strokeWidth={1.5}
+        d="M29.523 6.53a7.793 7.793 0 00-11.021 0L17 8.033l-1.502-1.501A7.794 7.794 0 004.477 17.552l1.502 1.502L17 30.076l11.022-11.022 1.502-1.502a7.793 7.793 0 000-11.021v0z"
+        stroke="#fff"
+        strokeWidth={2.5}
         strokeLinecap="round"
         strokeLinejoin="round"
       />
     </Svg>
-  )
+  );
 }
 
-export default SvgFavoritos
+export default SvgFavoritos;

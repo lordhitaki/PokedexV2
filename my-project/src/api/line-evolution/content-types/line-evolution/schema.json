@@ -1,0 +1,25 @@
+{
+  "kind": "collectionType",
+  "collectionName": "line_evolutions",
+  "info": {
+    "singularName": "line-evolution",
+    "pluralName": "line-evolutions",
+    "displayName": "LineEvolution",
+    "description": ""
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "Evolutions": {
+      "type": "string"
+    },
+    "lvl": {
+      "type": "string"
+    },
+    "img": {
+      "type": "string"
+    }
+  }
+}

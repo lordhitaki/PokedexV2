@@ -14,12 +14,15 @@ import RegisterSuccess from '../pages/loginAndRegister/register/registerSuccess'
 import Home from '../pages/home';
 import ForgotPass from '../pages/loginAndRegister/login/forgotPassword';
 import ForgotCode from '../pages/loginAndRegister/login/forgotPassword/forgotCode';
+import ChangeEmail from '../pages/home/profile/changedEmail';
+import ChangeName from '../pages/home/profile/ChangeName';
+import Details from '../pages/details';
 
 const Stack = createNativeStackNavigator();
 
 export default function Routes() {
   return (
-    <Stack.Navigator initialRouteName="Home">
+    <Stack.Navigator initialRouteName="Index">
       <Stack.Screen name="Index" component={Index} options={{ headerShown: false }} />
       <Stack.Screen name="Pre" component={Pre} options={{ headerShown: false }} />
       <Stack.Screen name="Create" component={Create} options={{ headerShown: false }} />
@@ -45,42 +48,9 @@ export default function Routes() {
       />
       <Stack.Screen name="ForgotPass" component={ForgotPass} options={{ headerShown: false }} />
       <Stack.Screen name="ForgotCode" component={ForgotCode} options={{ headerShown: false }} />
-      {/* 
-      
-      
-      
-      
-      
-      <Stack.Screen
-        name="CadastroC"
-        component={CadastroC}
-        options={{ headerShown: false }}
-      />    
-      <Stack.Screen
-        name="Pokedex"
-        component={Pokedex}
-        options={{ headerShown: false }}
-      />    
-      <Stack.Screen
-        name="Detalhes"
-        component={Detalhes}
-        options={{ headerShown: false }}
-      />    
-      <Stack.Screen
-        name="Perfil"
-        component={Perfil}
-        options={{ headerShown: false }}
-      />    
-      <Stack.Screen
-        name="Regioes"
-        component={Regioes}
-        options={{ headerShown: false }}
-      />    
-      <Stack.Screen
-        name="Favoritos"
-        component={Favoritos}
-        options={{ headerShown: false }}
-      />     */}
+      <Stack.Screen name="ChangeEmail" component={ChangeEmail} options={{ headerShown: false }} />
+      <Stack.Screen name="ChangeName" component={ChangeName} options={{ headerShown: false }} />
+      <Stack.Screen name="Details" component={Details} options={{ headerShown: false }} />
     </Stack.Navigator>
   );
 }

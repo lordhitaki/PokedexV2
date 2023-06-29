@@ -1,5 +1,4 @@
-import React, { useContext, useState } from 'react';
-import { StatusBar } from 'react-native';
+import React, { useState } from 'react';
 import { useNavigation } from '@react-navigation/native';
 import AppIntroSlider from 'react-native-app-intro-slider';
 import { useTranslation } from 'react-i18next';
@@ -28,7 +27,6 @@ export default function Index() {
       image: <SvgMeninaRosa />,
     },
   ];
-  const [showHome, setShowHome] = useState(false);
   const navigation = useNavigation();
 
   function renderSlides({ item }) {
@@ -45,8 +43,6 @@ export default function Index() {
     );
   }
 
-  if (showHome) {
-  }
   return (
     <AppIntroSlider
       renderItem={renderSlides}

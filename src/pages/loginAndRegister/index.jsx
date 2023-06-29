@@ -1,5 +1,4 @@
 import React, { useContext } from 'react';
-import { StatusBar } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import * as Styled from './styles';
 import { useTranslation } from 'react-i18next';
