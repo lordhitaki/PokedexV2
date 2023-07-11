@@ -17,12 +17,13 @@ import ForgotCode from '../pages/loginAndRegister/login/forgotPassword/forgotCod
 import ChangeEmail from '../pages/home/profile/changedEmail';
 import ChangeName from '../pages/home/profile/ChangeName';
 import Details from '../pages/details';
+import SplashScreen from '../splashScreen';
 
 const Stack = createNativeStackNavigator();
 
 export default function Routes() {
   return (
-    <Stack.Navigator initialRouteName="Index">
+    <Stack.Navigator initialRouteName="SplashScreen">
       <Stack.Screen name="Index" component={Index} options={{ headerShown: false }} />
       <Stack.Screen name="Pre" component={Pre} options={{ headerShown: false }} />
       <Stack.Screen name="Create" component={Create} options={{ headerShown: false }} />
@@ -51,6 +52,7 @@ export default function Routes() {
       <Stack.Screen name="ChangeEmail" component={ChangeEmail} options={{ headerShown: false }} />
       <Stack.Screen name="ChangeName" component={ChangeName} options={{ headerShown: false }} />
       <Stack.Screen name="Details" component={Details} options={{ headerShown: false }} />
+      <Stack.Screen name="SplashScreen" component={SplashScreen} options={{ headerShown: false }} />
     </Stack.Navigator>
   );
 }

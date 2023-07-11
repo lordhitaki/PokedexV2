@@ -35,17 +35,12 @@ export const Icone = styled(Icon)`
 
 export const BoxFilters = styled.View`
   width: 100%;
-  align-items: center;
-  top: 30px;
-  right: 90px;
   flex-direction: row;
+  justify-content: space-around;
+  margin-top: 10px;
+  margin-bottom: 10px;
 `;
 export const BoxTypeFilter = styled.View`
-  z-index: 1;
+  flex-direction: row;
   width: 100%;
-`;
-export const BoxTypeFilter1 = styled.View`
-  position: absolute;
-  width: 100%;
-  left: 180px;
 `;

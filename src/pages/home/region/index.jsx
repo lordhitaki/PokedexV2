@@ -14,12 +14,12 @@ export default function Region() {
         <Styled.Body>
           <Styled.BoxRegion>
             <Styled.Touch
-              onPress={() =>
-                navigation.navigate('Pokedex', {
-                  limit: 151,
-                  offset: 0,
-                })
-              }
+            // onPress={() =>
+            //   navigation.navigate('Pokedex', {
+            //     limit: 151,
+            //     offset: 0,
+            //   })
+            // }
             >
               <Styled.BackImg source={require('../../../../assets/img/backRegion/kanto.png')} />
               <Styled.BoxInfos>
@@ -49,12 +49,12 @@ export default function Region() {
           </Styled.BoxRegion>
           <Styled.BoxRegion>
             <Styled.Touch
-              onPress={() =>
-                navigation.navigate('Pokedex', {
-                  limit: 100,
-                  offset: 151,
-                })
-              }
+            // onPress={() =>
+            //   navigation.navigate('Pokedex', {
+            //     limit: 100,
+            //     offset: 151,
+            //   })
+            // }
             >
               <Styled.BackImg source={require('../../../../assets/img/backRegion/johto.png')} />
               <Styled.BoxInfos>
@@ -84,12 +84,12 @@ export default function Region() {
           </Styled.BoxRegion>
           <Styled.BoxRegion>
             <Styled.Touch
-              onPress={() =>
-                navigation.navigate('Pokedex', {
-                  limit: 135,
-                  offset: 251,
-                })
-              }
+            // onPress={() =>
+            //   navigation.navigate('Pokedex', {
+            //     limit: 135,
+            //     offset: 251,
+            //   })
+            // }
             >
               <Styled.BackImg source={require('../../../../assets/img/backRegion/hoenn.png')} />
               <Styled.BoxInfos>
@@ -119,12 +119,12 @@ export default function Region() {
           </Styled.BoxRegion>
           <Styled.BoxRegion>
             <Styled.Touch
-              onPress={() =>
-                navigation.navigate('Pokedex', {
-                  limit: 107,
-                  offset: 386,
-                })
-              }
+            // onPress={() =>
+            //   navigation.navigate('Pokedex', {
+            //     limit: 107,
+            //     offset: 386,
+            //   })
+            // }
             >
               <Styled.BackImg source={require('../../../../assets/img/backRegion/sinnoh.png')} />
               <Styled.BoxInfos>
@@ -154,12 +154,12 @@ export default function Region() {
           </Styled.BoxRegion>
           <Styled.BoxRegion>
             <Styled.Touch
-              onPress={() =>
-                navigation.navigate('Pokedex', {
-                  limit: 156,
-                  offset: 493,
-                })
-              }
+            // onPress={() =>
+            //   navigation.navigate('Pokedex', {
+            //     limit: 156,
+            //     offset: 493,
+            //   })
+            // }
             >
               <Styled.BackImg source={require('../../../../assets/img/backRegion/unova.png')} />
               <Styled.BoxInfos>
@@ -189,12 +189,12 @@ export default function Region() {
           </Styled.BoxRegion>
           <Styled.BoxRegion>
             <Styled.Touch
-              onPress={() =>
-                navigation.navigate('Pokedex', {
-                  limit: 72,
-                  offset: 649,
-                })
-              }
+            // onPress={() =>
+            //   navigation.navigate('Pokedex', {
+            //     limit: 72,
+            //     offset: 649,
+            //   })
+            // }
             >
               <Styled.BackImg source={require('../../../../assets/img/backRegion/kalos.png')} />
               <Styled.BoxInfos>
@@ -224,12 +224,12 @@ export default function Region() {
           </Styled.BoxRegion>
           <Styled.BoxRegion>
             <Styled.Touch
-              onPress={() =>
-                navigation.navigate('Pokedex', {
-                  limit: 88,
-                  offset: 721,
-                })
-              }
+            // onPress={() =>
+            //   navigation.navigate('Pokedex', {
+            //     limit: 88,
+            //     offset: 721,
+            //   })
+            // }
             >
               <Styled.BackImg source={require('../../../../assets/img/backRegion/alola.png')} />
               <Styled.BoxInfos>
@@ -259,12 +259,12 @@ export default function Region() {
           </Styled.BoxRegion>
           <Styled.BoxRegion>
             <Styled.Touch
-              onPress={() =>
-                navigation.navigate('Pokedex', {
-                  limit: 96,
-                  offset: 809,
-                })
-              }
+            // onPress={() =>
+            //   navigation.navigate('Pokedex', {
+            //     limit: 96,
+            //     offset: 809,
+            //   })
+            // }
             >
               <Styled.BackImg source={require('../../../../assets/img/backRegion/galar.png')} />
               <Styled.BoxInfos>

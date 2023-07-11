@@ -41,10 +41,11 @@ export const Button = styled.TouchableOpacity`
 `;
 
 export const ButtonOpen = styled(Button)`
-  width: 45%;
+  width: 90%;
   background-color: ${(props) => props.theme.colorButton[props.backgroundColor]};
   height: 45px;
   border-radius: 50px;
+  right: 10px;
 `;
 
 export const BoxIcone = styled.View`

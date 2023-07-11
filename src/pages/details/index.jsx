@@ -26,9 +26,14 @@ export default function Details() {
   const getPokemonData = async () => {
     try {
       const response = await pokeApi.get(
-        `/pokemons/${route.params?.id}?populate=types,images,line_evolutions,weakness,header,ATK,DEF,HP,SPEED,card,typeEvos,background,type_text,num`
+        `/pokemons/${route.params?.id}?populate=types,images,line_evolutions,weakness,header,ATK,DEF,HP,SPEED,card,typeEvos,background,type_text,num`,
+        {
+          params: {
+            populate: ['line_evolutions.evosTypes', 'line_evolutions.card'],
+          },
+        }
       );
-
+      // console.log(response.data.data.attributes.line_evolutions.data[0].attributes.evosTypes.data);
       setPokemonList(response.data.data.attributes);
     } catch (error) {
       console.error(error);
@@ -75,7 +80,6 @@ export default function Details() {
   };
 
   const isFavorito = favoritos.some((p) => p.name === pokemonList.name);
-
   return (
     <Styled.Container>
       <Styled.Scroll>
@@ -164,44 +168,43 @@ export default function Details() {
           </Styled.BoxWeak>
           <Styled.TitleStats>{t('Evoluções')}</Styled.TitleStats>
           <Styled.BoxEvo>
-            {pokemonList.line_evolutions?.data &&
-              pokemonList.line_evolutions?.data.map((item, index) => (
-                <Styled.BoxPokeEvo key={index}>
-                  <Styled.BodyPokeEvo>
-                    <Styled.Card>
-                      <Styled.ImgCard
-                        source={{
-                          uri: `http://192.168.1.105:1337${pokemonList.card?.data[0].attributes.url}`,
-                        }}
-                      />
-                      <Styled.ImgPokeEvo
-                        source={{ uri: `http://192.168.1.105:1337${item.attributes.img}` }}
-                        key={index}
-                      />
-                    </Styled.Card>
-                    <Styled.BoxEvoInfos>
-                      <Styled.NameEvo>{pokemonList?.name}</Styled.NameEvo>
-                      <Styled.NumEvo>Nº{pokemonList?.num}</Styled.NumEvo>
-                      <Styled.BoxEvoType>
-                        {pokemonList.typeEvos?.data.map((item, index) => (
-                          <Styled.EvoType
-                            source={{ uri: `http://192.168.1.105:1337${item.attributes.url}` }}
-                            key={index}
-                          />
-                        ))}
-                      </Styled.BoxEvoType>
-                    </Styled.BoxEvoInfos>
-                  </Styled.BodyPokeEvo>
-                  {item.attributes.lvl && (
-                    <Styled.LvlEvo>
-                      <Styled.IconEvo name="arrow-down" />
-                      <Styled.TextEvo>
-                        {t('Nível')}: {item.attributes.lvl}
-                      </Styled.TextEvo>
-                    </Styled.LvlEvo>
-                  )}
-                </Styled.BoxPokeEvo>
-              ))}
+            {pokemonList.line_evolutions?.data.map((item, index) => (
+              <Styled.BoxPokeEvo key={index}>
+                <Styled.BodyPokeEvo>
+                  <Styled.Card>
+                    <Styled.ImgCard
+                      source={{
+                        uri: `http://192.168.1.105:1337${item?.attributes.card.data[0].attributes.url}`,
+                      }}
+                    />
+                    <Styled.ImgPokeEvo
+                      source={{ uri: `http://192.168.1.105:1337${item.attributes.img}` }}
+                      key={index}
+                    />
+                  </Styled.Card>
+                  <Styled.BoxEvoInfos>
+                    <Styled.NameEvo>{item?.attributes.Evolutions}</Styled.NameEvo>
+                    <Styled.NumEvo>Nº{item?.attributes.num}</Styled.NumEvo>
+                    <Styled.BoxEvoType>
+                      {item.attributes.evosTypes?.data?.map((evolution, evolutionIndex) => (
+                        <Styled.EvoType
+                          source={{
+                            uri: `http://192.168.1.105:1337${evolution.attributes.url}`,
+                          }}
+                          key={evolutionIndex}
+                        />
+                      ))}
+                    </Styled.BoxEvoType>
+                  </Styled.BoxEvoInfos>
+                </Styled.BodyPokeEvo>
+                {item.attributes.lvl && (
+                  <Styled.LvlEvo>
+                    <Styled.IconEvo name="arrow-down" />
+                    <Styled.TextEvo>Evolui {item.attributes.lvl}</Styled.TextEvo>
+                  </Styled.LvlEvo>
+                )}
+              </Styled.BoxPokeEvo>
+            ))}
           </Styled.BoxEvo>
         </Styled.Body>
       </Styled.Scroll>

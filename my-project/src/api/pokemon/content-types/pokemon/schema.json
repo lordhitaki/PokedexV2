@@ -29,11 +29,6 @@
         "audios"
       ]
     },
-    "line_evolutions": {
-      "type": "relation",
-      "relation": "oneToMany",
-      "target": "api::line-evolution.line-evolution"
-    },
     "background": {
       "type": "media",
       "multiple": false,
@@ -70,11 +65,6 @@
     "cardColor": {
       "type": "string"
     },
-    "tipos": {
-      "type": "relation",
-      "relation": "oneToMany",
-      "target": "api::tipo.tipo"
-    },
     "header": {
       "type": "media",
       "multiple": true,
@@ -98,30 +88,13 @@
     "SPEED": {
       "type": "string"
     },
-    "card": {
-      "type": "media",
-      "multiple": true,
-      "required": false,
-      "allowedTypes": [
-        "images",
-        "files",
-        "videos",
-        "audios"
-      ]
-    },
-    "typeEvos": {
-      "type": "media",
-      "multiple": true,
-      "required": false,
-      "allowedTypes": [
-        "images",
-        "files",
-        "videos",
-        "audios"
-      ]
-    },
     "num": {
       "type": "string"
+    },
+    "line_evolutions": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::line-evolution.line-evolution"
     }
   }
 }

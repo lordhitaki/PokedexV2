@@ -7,6 +7,7 @@ import * as Styled from './styles';
 
 import SvgIndex from '../../../../assets/img/treinadores';
 import SvgMeninaRosa from '../../../../assets/img/treinadores/meninaRosa';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 export default function Index() {
   const { t, i18n } = useTranslation();
@@ -28,6 +29,11 @@ export default function Index() {
     },
   ];
   const navigation = useNavigation();
+
+  async function Valida() {
+    await AsyncStorage.setItem('onBoarding', 'true');
+    navigation.navigate('Pre');
+  }
 
   function renderSlides({ item }) {
     return (
@@ -66,7 +72,7 @@ export default function Index() {
           <Styled.TextButtonNext> {t('Vamos Começar!')}</Styled.TextButtonNext>
         </Styled.BoxNext>
       )}
-      onDone={() => navigation.navigate('Pre')}
+      onDone={() => Valida()}
     />
   );
 }

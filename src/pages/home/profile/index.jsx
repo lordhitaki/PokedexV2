@@ -39,6 +39,7 @@ export default function Profile() {
     try {
       await AsyncStorage.removeItem('Token');
       await AsyncStorage.removeItem('ID');
+      await AsyncStorage.removeItem('@favoritos');
       alert('usuario deslogado');
       navigation.navigate('Pre');
     } catch (error) {

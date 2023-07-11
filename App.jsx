@@ -4,7 +4,6 @@ import { NavigationContainer } from '@react-navigation/native';
 import { ThemeProvider } from './src/theme/theme';
 import './src/utils/i18n';
 
-import SplashScreen from './src/splashScreen';
 import Routes from './src/routes/stackRoutes';
 
 function App() {
@@ -16,9 +15,9 @@ function App() {
     }, 3000);
   }, []);
 
-  if (!appReady) {
-    return <SplashScreen />;
-  }
+  // if (!appReady) {
+  //   return <SplashScreen />;
+  // }
 
   return (
     <ThemeProvider>

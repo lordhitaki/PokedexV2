@@ -26,10 +26,8 @@ export default function Pokedex() {
       <Styled.BoxFilters>
         <Styled.BoxTypeFilter>
           <FilterType onTipoSelected={(tipo) => setTipoSelecionado(tipo)} />
-        </Styled.BoxTypeFilter>
-        <Styled.BoxTypeFilter1>
           <FilterOrder onFilterSelected={(filtro) => onSetFilter(filtro)} />
-        </Styled.BoxTypeFilter1>
+        </Styled.BoxTypeFilter>
       </Styled.BoxFilters>
       <CardList searchText={searchText} tipo={tipoSelecionado} filtro={onFilter} />
     </Styled.Container>
