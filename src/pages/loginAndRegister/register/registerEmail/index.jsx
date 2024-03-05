@@ -1,36 +1,19 @@
-import React, { useState, useContext } from 'react';
-import { StatusBar, TouchableWithoutFeedback, Keyboard, KeyboardAvoidingView } from 'react-native';
-import { useNavigation, useRoute } from '@react-navigation/native';
+import React from 'react';
+import { TouchableWithoutFeedback, Keyboard, KeyboardAvoidingView } from 'react-native';
+import { useNavigation } from '@react-navigation/native';
 
-import {
-  Container,
-  BoxBack,
-  Touch,
-  BoxTextHeader,
-  TextCreate,
-  BoxButtons,
-  Icone,
-  BoxInputs,
-  BoxText,
-  Text02,
-  Text01,
-  TextInput,
-  Email,
-  ErrorMsg,
-} from './styles';
 import * as Styled from './styles';
 import { useTranslation } from 'react-i18next';
 import '../../../../utils/i18n';
 import Botao from '../../../../components/buttons';
 import Input from '../../../../components/inputs';
-import api from '../../../../services/api';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
 
 export default function RegisterEmail() {
   const navigation = useNavigation();
-  const { t, i18n } = useTranslation();
+  const { t } = useTranslation();
 
   const signUpSchema = yup.object({
     email: yup.string().email(t('Informe um E-mail válido')).required(t('Digite seu E-mail')),
@@ -69,7 +52,7 @@ export default function RegisterEmail() {
               <Styled.Text02>{t('Vamos começar!')}</Styled.Text02>
               <Styled.Text01>{t('Qual é seu e-mail?')}</Styled.Text01>
             </Styled.BoxText>
-            <BoxInputs>
+            <Styled.BoxInputs>
               <Input
                 control={control}
                 name="email"
@@ -78,7 +61,7 @@ export default function RegisterEmail() {
                 errors={errors}
               />
               {errors.email && <Styled.ErrorMsg>{errors.email.message}</Styled.ErrorMsg>}
-            </BoxInputs>
+            </Styled.BoxInputs>
             <Styled.Email>
               <Styled.TextInput>{t('Use um endereço de e-mail válido.')}</Styled.TextInput>
             </Styled.Email>

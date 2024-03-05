@@ -21,7 +21,6 @@ export default function FilterType({ onTipoSelected }) {
     onTipoSelected(type);
     setButton({ name: name, type: type, color: color, backgroundColor: backgroundColor });
   };
-
   return (
     <Styled.BoxModal>
       <Styled.Modal

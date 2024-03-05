@@ -1,20 +1,20 @@
 import React from 'react';
 import { TouchableWithoutFeedback, Keyboard, KeyboardAvoidingView } from 'react-native';
 import { useNavigation, useRoute } from '@react-navigation/native';
-
-import * as Styled from './styles';
+import firestore from '@react-native-firebase/firestore';
 import { useTranslation } from 'react-i18next';
-import '../../../../utils/i18n';
-import Botao from '../../../../components/buttons';
-import Input from '../../../../components/inputs';
-import api from '../../../../services/api';
-import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
+import { useForm } from 'react-hook-form';
 import * as yup from 'yup';
+
+import Input from '../../../../components/inputs';
+import Botao from '../../../../components/buttons';
+import '../../../../utils/i18n';
+import * as Styled from './styles';
 
 export default function ChangeName() {
   const navigation = useNavigation();
-  const { t, i18n } = useTranslation();
+  const { t } = useTranslation();
   const route = useRoute();
   const { id } = route.params;
 
@@ -34,14 +34,40 @@ export default function ChangeName() {
     resolver: yupResolver(signUpSchema),
   });
   const user = watch('username');
-  const onSubmit = async (data) => {
-    if (user.length > 0) {
-      const change = { name: user };
-      const response = await api.put(`users/name/${id}`, change);
+
+  // const onSubmit = async (data) => {
+  //   if (user.length > 0) {
+  //     const change = { name: user };
+  //     const response = await api.put(`users/name/${id}`, change);
+  //   }
+  //   console.log('Sucesso');
+  //   navigation.navigate('Home');
+  // };
+
+  const infoUpdt = {
+    username: user
+  } 
+  
+  
+  const onSubmit = async () => {
+    if (user.length > 3) {
+      try {
+        const infosCollection = firestore().collection('user'); 
+        const querySnapshot = await infosCollection
+          .where('uid', '==', id)
+          .get();
+  
+        if (!querySnapshot.empty) {
+          const docRef = querySnapshot.docs[0].ref;
+          await docRef.update(infoUpdt);
+          navigation.navigate('Home')
+        }
+      } catch (error) {
+        console.error('Erro ao atualizar informações do usuário:', error);
+      }
     }
-    console.log('Sucesso');
-    navigation.navigate('Home');
   };
+  
 
   return (
     <>

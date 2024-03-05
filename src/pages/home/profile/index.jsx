@@ -1,29 +1,36 @@
 import React, { useState, useContext, useEffect, useCallback } from 'react';
-import { ThemeContext, ThemeType } from '../../../../src/theme/theme';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useNavigation, useIsFocused } from '@react-navigation/native';
+import auth from '@react-native-firebase/auth';
+import firestore from '@react-native-firebase/firestore';
+import { useTranslation } from 'react-i18next';
+
+import { ThemeContext, ThemeType } from '../../../../src/theme/theme';
+import '../../../utils/i18n';
+import * as Styled from './style';
+
 import BotaoImg from '../../../components/buttons/BotaoImg';
 import SvgMeninaAzul from '../../../../assets/img/imgs/meninaAzul';
 import SvgRedCap from '../../../../assets/img/imgs/redCap';
-import api from '../../../services/api';
-import * as Styled from './style';
-import { useTranslation } from 'react-i18next';
-import '../../../utils/i18n';
 
 export default function Profile() {
   const { toggleTheme, theme } = useContext(ThemeContext);
   const isDarkMode = theme === ThemeType.dark;
+  const { t } = useTranslation();
+  const { i18n } = useTranslation();
+  
   const navigation = useNavigation();
   const isFocused = useIsFocused();
-  const [token, setToken] = useState();
-  const [ID, setID] = useState();
-  const [userData, setUserData] = useState(null);
-  const { i18n } = useTranslation();
-
+  
   const [modalVisible, setModalVisible] = useState(false);
   const [modalVisible1, setModalVisible1] = useState(false);
   const [modalVisible2, setModalVisible2] = useState(false);
-  const { t } = useTranslation();
+  const [user, setUser] = useState(null);
+  const [userData, setUserData] = useState(null);
+  const [token, setToken] = useState();
+  const [infosUser, setInfosUser] = useState();
+
+  console.log(token);
   const changeLanguage = (value) => {
     i18n
       .changeLanguage(value)
@@ -37,34 +44,40 @@ export default function Profile() {
   };
   const clearAsyncStorage = async () => {
     try {
+      auth()
+      .signOut()
+      .then(() => console.log('User signed out!'));
       await AsyncStorage.removeItem('Token');
       await AsyncStorage.removeItem('ID');
       await AsyncStorage.removeItem('@favoritos');
+      await AsyncStorage.removeItem('log');
+      navigation.navigate("Pre")
       alert('usuario deslogado');
-      navigation.navigate('Pre');
     } catch (error) {
       console.log('Erro ao limpar o AsyncStorage:', error);
     }
   };
+
   const checkTokenValidity = useCallback(async () => {
     try {
-      const asyncToken = await AsyncStorage.getItem('Token');
-      const asyncID = await AsyncStorage.getItem('ID');
+      const asyncToken = await AsyncStorage.getItem('user');
+      const infos = await AsyncStorage.getItem('infos');
       setToken(asyncToken);
       if (asyncToken) {
         try {
-          const response = await api.get(`/users/${asyncID}`);
-          const id = response.data._id;
-          const { name, email, photo } = response.data;
-          setUserData({ name, email, photo, id });
+          const infosUser = JSON.parse(infos);
+          setInfosUser(infosUser)
         } catch (error) {}
       }
     } catch (error) {
       console.log('Erro ao verificar o token:', error);
     }
   }, [setToken, setUserData]);
+
+
   useEffect(() => {
     checkTokenValidity();
+    fetchUserInfo()
   }, [checkTokenValidity, isFocused]);
 
   useEffect(() => {
@@ -73,47 +86,71 @@ export default function Profile() {
     }
   }, [isFocused, checkTokenValidity, token]);
 
+
+  const fetchUserInfo = async () => {
+    try {
+      const storedUser = await AsyncStorage.getItem('user');
+      const sanitizedUid = storedUser.replace(/"/g, '');
+      if (storedUser) {
+        const infoSnapshot = await firestore()
+          .collection('user')
+          .where('uid', '==', sanitizedUid)
+          .get();
+
+        if (!infoSnapshot.empty) {
+          const infoData = infoSnapshot.docs[0]._data;
+          setUser(infoData);
+        } else {
+          setUser(null);
+        }
+      }
+    } catch (error) {
+      console.error('Erro ao consultar o Firestore:', error);
+    }
+  };
+
   return (
     <Styled.Container>
-      {!!token ? (
+      {token ? (
         <>
           <Styled.HeaderOn>
             <Styled.ProfilePic>
-              {userData?.photo ? <Styled.ImageStyled source={{ uri: userData.photo }} /> : null}
+              {user?.photo ? <Styled.ImageStyled source={{ uri: user.photo }} /> : null}
             </Styled.ProfilePic>
-            <Styled.Title> {userData?.name}</Styled.Title>
+            <Styled.Title> {user?.username}</Styled.Title>
           </Styled.HeaderOn>
           <Styled.Scroll>
             <Styled.Title> {t('Informações da conta')}</Styled.Title>
             <Styled.BoxInfos>
-              <Styled.Teste onPress={() => navigation.navigate('ChangeName', { id: userData?.id })}>
+              <Styled.Teste onPress={() => navigation.navigate('ChangeName', { id: user?.uid })}>
                 <Styled.BoxIcone>
                   <Styled.BoxTermos>
                     <Styled.TextInformations> {t('Nome')}</Styled.TextInformations>
-                    <Styled.TextDados>{userData?.name}</Styled.TextDados>
+                    <Styled.TextDados>{user?.username}</Styled.TextDados>
                   </Styled.BoxTermos>
                   <Styled.Icone name="angle-right" size={20} />
                 </Styled.BoxIcone>
               </Styled.Teste>
               <Styled.Teste
-                onPress={() => navigation.navigate('ChangeEmail', { id: userData?.id })}
+                onPress={() => (console.log("clicou"))}
+                // onPress={() => navigation.navigate('ChangeEmail', { id: user?.uid })}
               >
                 <Styled.BoxIcone>
                   <Styled.BoxTermos>
-                    <Styled.TextInformations> {t('Email')}</Styled.TextInformations>
-                    <Styled.TextDados>{userData?.email}</Styled.TextDados>
+                    {/* <Styled.TextInformations> {t('Email')}</Styled.TextInformations>
+                    <Styled.TextDados>{infosUser?.email}</Styled.TextDados> */}
                   </Styled.BoxTermos>
-                  <Styled.Icone name="angle-right" size={20} />
+                  {/* <Styled.Icone name="angle-right" size={20} /> */}
                 </Styled.BoxIcone>
               </Styled.Teste>
               <Styled.Teste>
-                <Styled.BoxIcone>
+                {/* <Styled.BoxIcone>
                   <Styled.BoxTermos>
                     <Styled.TextInformations> {t('Senha')}</Styled.TextInformations>
                     <Styled.TextDados> *********</Styled.TextDados>
                   </Styled.BoxTermos>
                   <Styled.Icone name="angle-right" size={20} />
-                </Styled.BoxIcone>
+                </Styled.BoxIcone> */}
               </Styled.Teste>
             </Styled.BoxInfos>
             <Styled.BoxDados>
@@ -160,7 +197,7 @@ export default function Profile() {
               <Styled.Teste onPress={() => clearAsyncStorage()}>
                 <Styled.TextLogout>{t('Sair')}</Styled.TextLogout>
                 <Styled.TextDados>
-                  {t('Você entrou como')} {userData?.name}
+                  {t('Você entrou como')} {infosUser?.email}
                 </Styled.TextDados>
               </Styled.Teste>
             </Styled.BoxTermos>

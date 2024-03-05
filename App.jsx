@@ -1,13 +1,15 @@
 import React, { useState, useEffect } from 'react';
 import { StatusBar } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
+
 import { ThemeProvider } from './src/theme/theme';
+import Routes from './src/routes/stackRoutes';
 import './src/utils/i18n';
 
-import Routes from './src/routes/stackRoutes';
 
 function App() {
   const [appReady, setAppReady] = useState(false);
+  
 
   useEffect(() => {
     setTimeout(() => {

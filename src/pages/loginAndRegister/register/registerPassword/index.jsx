@@ -1,28 +1,26 @@
-import React, { useState, useContext } from 'react';
+import React from 'react';
+import { useNavigation, useRoute } from '@react-navigation/native';
+import * as yup from 'yup';
+import { useTranslation } from 'react-i18next';
+import { yupResolver } from '@hookform/resolvers/yup';
+import { useForm } from 'react-hook-form';
+import auth from '@react-native-firebase/auth';
 import {
-  StatusBar,
-  View,
   TouchableWithoutFeedback,
   Keyboard,
   KeyboardAvoidingView,
-  Text,
 } from 'react-native';
-import { useNavigation, useRoute } from '@react-navigation/native';
 
 import * as Styled from './styles';
-import { useTranslation } from 'react-i18next';
 import '../../../../utils/i18n';
 import Botao from '../../../../components/buttons';
 import InputPass from '../../../../components/inputs/inputPass';
-import { useForm } from 'react-hook-form';
-import { yupResolver } from '@hookform/resolvers/yup';
-import * as yup from 'yup';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 export default function RegisterPassword() {
   const navigation = useNavigation();
-  const { t, i18n } = useTranslation();
+  const { t } = useTranslation();
   const route = useRoute();
-  const { email } = route.params;
 
   const signUpSchema = yup.object({
     password: yup.string().required(t('Informe sua senha!')).min(8),
@@ -37,19 +35,29 @@ export default function RegisterPassword() {
     resolver: yupResolver(signUpSchema),
   });
 
-  const user = watch('password');
-  const onSubmit = async (data) => {
-    try {
-      if (user.length > 0) {
-        navigation.navigate('RegisterUser', {
-          email: route.params.email,
-          password: user,
-        });
-      }
-    } catch (error) {
-      console.log(error);
+  const pass = watch('password');
+ 
+
+  const onSubmit = async () => {
+    auth()
+  .createUserWithEmailAndPassword(route.params.email, pass)
+  .then(() => {
+    console.log('User account created & signed in!');
+    AsyncStorage.setItem('log', 'false');
+    navigation.navigate('RegisterUser')
+  })
+  .catch(error => {
+    if (error.code === 'auth/email-already-in-use') {
+      console.log('That email address is already in use!');
     }
-  };
+
+    if (error.code === 'auth/invalid-email') {
+      console.log('That email address is invalid!');
+    }
+
+    console.error(error);
+  });
+  }
 
   return (
     <>
@@ -87,7 +95,7 @@ export default function RegisterPassword() {
       </TouchableWithoutFeedback>
       <Styled.BoxButtons>
         <Botao
-          disabled={user?.length > 0}
+          disabled={pass?.length > 0}
           backgroundColor={'azul'}
           name={t('Continuar')}
           onPress={handleSubmit(onSubmit)}

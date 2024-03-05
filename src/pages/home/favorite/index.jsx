@@ -21,7 +21,7 @@ export default function Favorite() {
 
   const checkTokenValidity = useCallback(async () => {
     try {
-      const asyncToken = await AsyncStorage.getItem('Token');
+      const asyncToken = await AsyncStorage.getItem('user');
       setToken(asyncToken);
       if (asyncToken) {
         try {
@@ -85,31 +85,31 @@ export default function Favorite() {
   };
 
   const renderPokemon = ({ item }) => {
-    const isFavorito = favoritos.some((p) => p.num === item.num);
+    const isFavorito = favoritos.some((p) => p.number === item.number);
 
     return (
-      <Styled.Touch key={item.num} onPress={() => navigation.navigate('Details', { id: item.num })}>
-        <Styled.FullCard backgroundColor={item.card}>
+      <Styled.Touch key={item.number} onPress={() => navigation.navigate('Details', { id: item.number })}>
+        <Styled.FullCard backgroundColor={item.cardColor}>
           <Styled.BoxInfos>
-            <Styled.Num>Nº{item.num}</Styled.Num>
+            <Styled.Num>Nº{item.number}</Styled.Num>
             <Styled.Name>{item.name}</Styled.Name>
           </Styled.BoxInfos>
           <Styled.BoxTypes>
-            {item.types.data?.map((type, index) => (
+            {item.type.map((type, index) => (
               <Styled.Types
-                source={{ uri: `http://192.168.1.105:1337${type.attributes.url}` }}
+                source={{ uri: type }}
                 key={index}
               />
             ))}
           </Styled.BoxTypes>
           <Styled.Bg
             source={{
-              uri: `http://192.168.1.105:1337${item.background.data.attributes.url}`,
+              uri: item.backType,
             }}
           />
           <Styled.PokeImg
             source={{
-              uri: `http://192.168.1.105:1337${item.images.data[0].attributes.url}`,
+              uri: item.sprite,
             }}
           />
           <Styled.BoxFavorite>
@@ -145,7 +145,7 @@ export default function Favorite() {
     return (
       <>
         <Styled.Container>
-          {!!token ? (
+          {token ? (
             <>
               <Styled.BoxImg>
                 <SvgMagikarp />

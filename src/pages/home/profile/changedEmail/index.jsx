@@ -1,6 +1,8 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { TouchableWithoutFeedback, Keyboard, KeyboardAvoidingView } from 'react-native';
 import { useNavigation, useRoute } from '@react-navigation/native';
+import auth, { firebase } from '@react-native-firebase/auth';
+
 
 import * as Styled from './styles';
 import { useTranslation } from 'react-i18next';
@@ -10,13 +12,14 @@ import Input from '../../../../components/inputs';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
-import api from '../../../../services/api';
 
 export default function ChangeEmail() {
   const navigation = useNavigation();
-  const { t, i18n } = useTranslation();
+  const { t } = useTranslation();
   const route = useRoute();
   const { id } = route.params;
+  const user = firebase.auth().currentUser;
+
 
   const signUpSchema = yup.object({
     email: yup.string().email(t('Informe um E-mail válido')).required(t('Digite seu E-mail')),
@@ -29,16 +32,35 @@ export default function ChangeEmail() {
     formState: { errors },
   } = useForm({
     resolver: yupResolver(signUpSchema),
+    defaultValues: {
+      email: 'teste1@teste.com',
+    },
   });
-  const user = watch('email');
-  const onSubmit = async (data) => {
-    if (user.length > 0) {
-      const change = { email: user };
-      const response = await api.put(`users/email/${id}`, change);
+  const newUserEmail = watch('email');
+  const onSubmit = async () => {
+    try {
+      // Verificar se o novo e-mail é válido
+      if (!newUserEmail) {
+        console.error('O novo e-mail é inválido.');
+        return;
+      }
+      
+      await user.updateEmail(newUserEmail);
+      // E-mail atualizado com sucesso
+      console.log('E-mail atualizado com sucesso para', newUserEmail);
+    } catch (error) {
+      // Houve um erro ao atualizar o e-mail
+      console.error('Erro ao atualizar o e-mail:', error.message);
     }
-    console.log('Sucesso');
-    navigation.navigate('Home');
   };
+  // const onSubmit = async (data) => {
+  //   if (user.length > 0) {
+  //     const change = { email: user };
+  //     const response = await api.put(`users/email/${id}`, change);
+  //   }
+  //   console.log('Sucesso');
+  //   navigation.navigate('Home');
+  // };
   return (
     <>
       <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
@@ -76,7 +98,7 @@ export default function ChangeEmail() {
       </TouchableWithoutFeedback>
       <Styled.BoxButtons>
         <Botao
-          disabled={user?.length > 0}
+          disabled={newUserEmail?.length > 0}
           backgroundColor={'azul'}
           name={t('Continuar')}
           onPress={handleSubmit(onSubmit)}

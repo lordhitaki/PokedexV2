@@ -63,7 +63,7 @@ export const PokeImg = styled(Image)`
 `;
 
 export const Types = styled(Image)`
-  width: 100px;
+  width: 90px;
   height: 30px;
   border-radius: 15px;
   object-fit: contain;

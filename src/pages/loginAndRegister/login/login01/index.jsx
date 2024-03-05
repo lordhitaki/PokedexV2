@@ -1,22 +1,25 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { TouchableWithoutFeedback, Keyboard, KeyboardAvoidingView } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
-import AsyncStorage from '@react-native-async-storage/async-storage';
+import auth from '@react-native-firebase/auth';
+
 
 import * as Styled from './styles';
 import { useTranslation } from 'react-i18next';
 import '../../../../utils/i18n';
 import Botao from '../../../../components/buttons';
 import Input from '../../../../components/inputs';
-import api from '../../../../services/api';
 import InputPass from '../../../../components/inputs/inputPass';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 export default function Login01() {
   const navigation = useNavigation();
-  const { t, i18n } = useTranslation();
+  const { t } = useTranslation();
+
+ 
 
   const signUpSchema = yup.object({
     email: yup.string().email(t('Informe um E-mail válido')).required(t('Digite seu E-mail')),
@@ -30,31 +33,25 @@ export default function Login01() {
     formState: { errors },
   } = useForm({
     resolver: yupResolver(signUpSchema),
+    defaultValues: {
+      email: 'teste1@teste.com',
+      password: 'teste12',
+    },
   });
 
   const user = watch('email');
   const pass = watch('password');
+
   const onSubmit = async (data) => {
-    try {
-      if (user.length > 0 && pass.length > 0) {
-        const response = await api.post('/auth/login', {
-          email: user,
-          password: pass,
-        });
-        const token = response.data.data.token;
-        const ID = response.data.data.user._id;
-        console.log(ID);
-        await AsyncStorage.setItem('ID', ID);
-        await AsyncStorage.setItem('Token', token);
-        navigation.navigate('LoadSuccess');
-      }
-    } catch (error) {
-      if (error) {
-        console.log(error);
-        alert('Senha ou usuário inválido');
-      }
-    }
-  };
+    auth()
+    .signInWithEmailAndPassword(user, pass)
+    .then(() => {
+       AsyncStorage.setItem('log', 'true');
+            navigation.navigate('Home');
+    })
+    .catch(error => console.log(error));
+  }
+  
 
   return (
     <>

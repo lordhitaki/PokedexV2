@@ -4,9 +4,10 @@ import { Image } from 'react-native';
 
 export const Container = styled.SafeAreaView`
   flex: 1;
-  color: ${(props) => props.theme.backgrounds.main};
-`;
-
+  background-color: ${(props) => props.theme.backgrounds.main};
+    `;
+  
+  
 export const Scroll = styled.ScrollView`
   width: 100%;
   height: 100%;
@@ -152,9 +153,9 @@ export const BoxWeak = styled.View`
 `;
 
 export const ImgWeak = styled(Image)`
-  object-fit: contain;
-  width: 150px;
+  width: 100px;
   height: 45px;
+  object-fit: contain
 `;
 
 export const BoxEvo = styled.View`

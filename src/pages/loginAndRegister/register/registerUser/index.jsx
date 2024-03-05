@@ -1,29 +1,38 @@
-import React, { useState, useContext } from 'react';
-import { StatusBar, TouchableWithoutFeedback, Keyboard, KeyboardAvoidingView } from 'react-native';
-import { useNavigation, useRoute } from '@react-navigation/native';
-
-import * as Styled from './styles';
+import React, { useEffect, useState } from 'react';
+import {  TouchableWithoutFeedback, Keyboard, KeyboardAvoidingView } from 'react-native';
+import { useNavigation } from '@react-navigation/native';
+import firestore from '@react-native-firebase/firestore';
 import { useTranslation } from 'react-i18next';
-import '../../../../utils/i18n';
-import Botao from '../../../../components/buttons';
-import Input from '../../../../components/inputs';
-import api from '../../../../services/api';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
 
+import * as Styled from './styles';
+import '../../../../utils/i18n';
+import Botao from '../../../../components/buttons';
+import Input from '../../../../components/inputs';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+
 export default function RegisterUser() {
   const navigation = useNavigation();
-  const { t, i18n } = useTranslation();
-  const route = useRoute();
-  const { email, password } = route.params;
+  const { t} = useTranslation();
+  const[id, setId ]= useState()
 
+  useEffect(() => {
+    getToken()
+  }, []);
   const signUpSchema = yup.object({
     username: yup
       .string()
       .required(t('Informe seu nome de usario'))
       .min(3, t('Seu nome de usuario precisa de pelo menos três caracteres')),
   });
+  const getToken = async () => {
+    const asyncToken = await AsyncStorage.getItem('user');
+    const cleanedToken = asyncToken.replace(/^"(.*)"$/, '$1');
+    setId(cleanedToken);
+  };
+  
 
   const {
     control,
@@ -34,25 +43,21 @@ export default function RegisterUser() {
     resolver: yupResolver(signUpSchema),
   });
   const user = watch('username');
-  const onSubmit = async (data) => {
-    try {
-      const newUser = {
-        name: user,
-        email: email,
-        password: password,
-      };
-      if (user.length > 0) {
-        const response = await api.post('/users', newUser);
-        console.log(response);
-        navigation.navigate('RegisterSuccess');
-      }
-    } catch (error) {
-      if (error.response.data.message) {
-        alert(t('O Endereço de e-mail ja esta em uso!'));
-        navigation.navigate('RegisterEmail');
-      }
-    }
+
+  const onSubmit = async () => {
+    firestore()
+  .collection('user')
+  .add({
+    username: user,
+    uid: id
+  })
+  .then(() => {
+    console.log('User added!');
+    AsyncStorage.setItem('log', 'true');
+    navigation.navigate("Home")
+  });
   };
+
   return (
     <>
       <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
