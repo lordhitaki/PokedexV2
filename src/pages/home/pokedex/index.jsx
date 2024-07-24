@@ -1,5 +1,6 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
+import { useRoute } from '@react-navigation/native';
 
 import * as Styled from './style';
 
@@ -8,10 +9,13 @@ import FilterType from '../../../components/filterTypes';
 import FilterOrder from '../../../components/filterOrder';
 
 export default function Pokedex() {
+  const route = useRoute();
+
   const { t } = useTranslation();
   const [searchText, setSearchText] = useState('');
   const [tipoSelecionado, setTipoSelecionado] = useState('');
   const [onFilter, onSetFilter] = useState('');
+  const limit = route.params?.limit;
 
   return (
     <Styled.Container>
@@ -29,7 +33,7 @@ export default function Pokedex() {
           <FilterOrder onFilterSelected={(filtro) => onSetFilter(filtro)} />
         </Styled.BoxTypeFilter>
       </Styled.BoxFilters>
-      <CardList searchText={searchText} tipo={tipoSelecionado} filtro={onFilter} />
+      <CardList searchText={searchText} tipo={tipoSelecionado} filtro={onFilter} limit={limit} />
     </Styled.Container>
   );
 }

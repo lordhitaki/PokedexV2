@@ -8,7 +8,7 @@ export default function FilterType({ onFilterSelected, defaultFilter }) {
   const { t } = useTranslation();
   const [modalVisible, setModalVisible] = useState(false);
   const [filter, setFilter] = useState(defaultFilter);
-  const [button, setButton] = useState({ name: 'Ordem crescente', filtro: defaultFilter });
+  const [button, setButton] = useState({ name: t('Ordem Crescente'), filtro: defaultFilter });
 
   const handlePress = (value, name) => {
     setFilter(value);

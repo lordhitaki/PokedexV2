@@ -12,32 +12,46 @@ export default function Details() {
   const navigation = useNavigation();
   const { t, i18n } = useTranslation();
   const isFocused = useIsFocused();
-  
+
   const route = useRoute();
-  const id = route.params.id
-  
+  const id = route.params.id;
+
   const [pokemon, setPokemon] = useState();
+  const [pokemonEvos, setPokemonEvos] = useState();
   const [favoritos, setFavoritos] = useState([]);
-  
-  
+
   useEffect(() => {
     if (isFocused) {
-      getPokemon();
+      getPokemon(id);
       getFavorite();
     }
   }, [isFocused]);
 
-
-  const getPokemon = async () => {
+  const getPokemon = async (id) => {
     try {
-      const infoSnapshot = await firestore()
-        .collection('Pokemon')
-        .where('number', '==', id)
-        .get();
-  
+      const infoSnapshot = await firestore().collection('Pokemon').where('number', '==', id).get();
+
       if (!infoSnapshot.empty) {
         const pokemonData = infoSnapshot.docs[0].data();
         setPokemon(pokemonData);
+
+        if (pokemonData.Evos && pokemonData.Evos.length > 0) {
+          const evosData = await Promise.all(
+            pokemonData.Evos.map(async (evoId) => {
+              const evoSnapshot = await firestore()
+                .collection('Pokemon')
+                .where('number', '==', evoId)
+                .get();
+              if (!evoSnapshot.empty) {
+                return evoSnapshot.docs[0].data();
+              } else {
+                console.log('Nenhum Pokémon encontrado com o ID de evolução:', evoId);
+                return null;
+              }
+            })
+          );
+          setPokemonEvos(evosData);
+        }
       } else {
         console.log('Nenhum Pokémon encontrado com o ID:', id);
       }
@@ -45,8 +59,6 @@ export default function Details() {
       console.error('Erro ao consultar o Firestore:', error);
     }
   };
-  
-
 
   const getFavorite = async () => {
     try {
@@ -87,7 +99,6 @@ export default function Details() {
     }
   };
 
-  console.log(pokemon);
   const isFavorito = favoritos.some((p) => p?.name === pokemon?.name);
   return (
     <Styled.Container>
@@ -128,13 +139,13 @@ export default function Details() {
             <Styled.Num>Nº{pokemon?.number}</Styled.Num>
           </Styled.BoxDescr>
           <Styled.BoxType>
-            {pokemon?.types?.map((item, index) => (
-              <Styled.ImgType
-                source={{ uri:item }}
-                key={index}
-              />
-            ))}
+            {Array.isArray(pokemon?.type)
+              ? pokemon.type.map((item, index) => (
+                  <Styled.ImgType source={{ uri: item }} key={index} />
+                ))
+              : pokemon?.types && <Styled.ImgType source={{ uri: pokemon.type }} />}
           </Styled.BoxType>
+
           <Styled.BoxHis>
             <Styled.TextHis>
               is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been
@@ -169,36 +180,30 @@ export default function Details() {
           <Styled.TitleStats>{t('Fraquezas')}</Styled.TitleStats>
           <Styled.BoxWeak>
             {pokemon?.weakness?.map((item, index) => (
-              <Styled.ImgWeak
-                source={{ uri: item }}
-                key={index}
-              />
+              <Styled.ImgWeak source={{ uri: item }} key={index} />
             ))}
           </Styled.BoxWeak>
           <Styled.TitleStats>{t('Evoluções')}</Styled.TitleStats>
-          {/* <Styled.BoxEvo>
-            {pokemon.line_evolutions?.data.map((item, index) => (
+          <Styled.BoxEvo>
+            {pokemonEvos?.map((item, index) => (
               <Styled.BoxPokeEvo key={index}>
                 <Styled.BodyPokeEvo>
                   <Styled.Card>
                     <Styled.ImgCard
                       source={{
-                        uri: `http://192.168.1.105:1337${item?.attributes.card.data[0].attributes.url}`,
+                        uri: `${item?.evoCard}`,
                       }}
                     />
-                    <Styled.ImgPokeEvo
-                      source={{ uri: `http://192.168.1.105:1337${item.attributes.img}` }}
-                      key={index}
-                    />
+                    <Styled.ImgPokeEvo source={{ uri: `${item.sprite}` }} key={index} />
                   </Styled.Card>
                   <Styled.BoxEvoInfos>
-                    <Styled.NameEvo>{item?.attributes.Evolutions}</Styled.NameEvo>
-                    <Styled.NumEvo>Nº{item?.attributes.num}</Styled.NumEvo>
+                    <Styled.NameEvo>{item?.name}</Styled.NameEvo>
+                    <Styled.NumEvo>Nº{item?.number}</Styled.NumEvo>
                     <Styled.BoxEvoType>
-                      {item.attributes.evosTypes?.data?.map((evolution, evolutionIndex) => (
+                      {item.type?.map((evolution, evolutionIndex) => (
                         <Styled.EvoType
                           source={{
-                            uri: `http://192.168.1.105:1337${evolution.attributes.url}`,
+                            uri: `${evolution}`,
                           }}
                           key={evolutionIndex}
                         />
@@ -206,15 +211,15 @@ export default function Details() {
                     </Styled.BoxEvoType>
                   </Styled.BoxEvoInfos>
                 </Styled.BodyPokeEvo>
-                {item.attributes.lvl && (
+                {item.evoLv && (
                   <Styled.LvlEvo>
                     <Styled.IconEvo name="arrow-down" />
-                    <Styled.TextEvo>Evolui {item.attributes.lvl}</Styled.TextEvo>
+                    <Styled.TextEvo>Evolui {item.evoLv}</Styled.TextEvo>
                   </Styled.LvlEvo>
                 )}
               </Styled.BoxPokeEvo>
             ))}
-          </Styled.BoxEvo> */}
+          </Styled.BoxEvo>
         </Styled.Body>
       </Styled.Scroll>
     </Styled.Container>

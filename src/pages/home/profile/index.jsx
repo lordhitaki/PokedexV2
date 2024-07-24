@@ -18,10 +18,10 @@ export default function Profile() {
   const isDarkMode = theme === ThemeType.dark;
   const { t } = useTranslation();
   const { i18n } = useTranslation();
-  
+
   const navigation = useNavigation();
   const isFocused = useIsFocused();
-  
+
   const [modalVisible, setModalVisible] = useState(false);
   const [modalVisible1, setModalVisible1] = useState(false);
   const [modalVisible2, setModalVisible2] = useState(false);
@@ -30,7 +30,6 @@ export default function Profile() {
   const [token, setToken] = useState();
   const [infosUser, setInfosUser] = useState();
 
-  console.log(token);
   const changeLanguage = (value) => {
     i18n
       .changeLanguage(value)
@@ -45,13 +44,13 @@ export default function Profile() {
   const clearAsyncStorage = async () => {
     try {
       auth()
-      .signOut()
-      .then(() => console.log('User signed out!'));
+        .signOut()
+        .then(() => console.log('User signed out!'));
       await AsyncStorage.removeItem('Token');
       await AsyncStorage.removeItem('ID');
       await AsyncStorage.removeItem('@favoritos');
       await AsyncStorage.removeItem('log');
-      navigation.navigate("Pre")
+      navigation.navigate('Pre');
       alert('usuario deslogado');
     } catch (error) {
       console.log('Erro ao limpar o AsyncStorage:', error);
@@ -66,7 +65,7 @@ export default function Profile() {
       if (asyncToken) {
         try {
           const infosUser = JSON.parse(infos);
-          setInfosUser(infosUser)
+          setInfosUser(infosUser);
         } catch (error) {}
       }
     } catch (error) {
@@ -74,10 +73,9 @@ export default function Profile() {
     }
   }, [setToken, setUserData]);
 
-
   useEffect(() => {
     checkTokenValidity();
-    fetchUserInfo()
+    fetchUserInfo();
   }, [checkTokenValidity, isFocused]);
 
   useEffect(() => {
@@ -85,7 +83,6 @@ export default function Profile() {
       checkTokenValidity();
     }
   }, [isFocused, checkTokenValidity, token]);
-
 
   const fetchUserInfo = async () => {
     try {
@@ -108,7 +105,7 @@ export default function Profile() {
       console.error('Erro ao consultar o Firestore:', error);
     }
   };
-
+  console.log(user);
   return (
     <Styled.Container>
       {token ? (
@@ -132,7 +129,7 @@ export default function Profile() {
                 </Styled.BoxIcone>
               </Styled.Teste>
               <Styled.Teste
-                onPress={() => (console.log("clicou"))}
+                onPress={() => console.log('clicou')}
                 // onPress={() => navigation.navigate('ChangeEmail', { id: user?.uid })}
               >
                 <Styled.BoxIcone>

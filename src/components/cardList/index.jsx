@@ -4,26 +4,26 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useNavigation, useIsFocused, useRoute } from '@react-navigation/native';
 import firestore from '@react-native-firebase/firestore';
 
-
 import * as Styled from './styles';
 import SvgCircleFavOn from '../../../assets/img/icons/circleFavOn';
 import SvgCircleFav from '../../../assets/img/icons/circleFav';
 
-export default function CardList({ searchText, tipo, filtro }) {
+export default function CardList({ searchText, tipo, filtro, limit }) {
   const isFocused = useIsFocused();
   const navigation = useNavigation();
   const route = useRoute();
-  
+
   const [offset, setOffset] = useState(0);
   const [favoritos, setFavoritos] = useState([]);
   const [initialFilter, setInitialFilter] = useState('Menor');
   const [pokemon, setPokemon] = useState();
+  console.log(limit);
 
   useEffect(() => {
     if (isFocused) {
       // getPokemonData();
       getFavorite();
-      getPokemon()
+      getPokemon();
     }
   }, [searchText, tipo, isFocused, filtro, initialFilter, offset]);
 
@@ -66,60 +66,9 @@ export default function CardList({ searchText, tipo, filtro }) {
     }
   };
 
-  // const getPokemonData = async () => {
-  //   try {
-  //     const response = await pokeApi.get(
-  //       `/pokemons?populate=types,images,line_evolutions,background,weakness,type_text&pagination[pageSize]=100`
-  //     );
-  //     const responseData = response.data.data.map((item) => item);
-  //     let filteredPokemonList = responseData.filter((pokemon) => {
-  //       const nameMatch = pokemon.attributes.name.toLowerCase().includes(searchText?.toLowerCase());
-  //       const typeMatch =
-  //         tipo === '' ||
-  //         (pokemon.attributes.types &&
-  //           pokemon.attributes.types.data.some((type) => {
-  //             const typeName = type.attributes.name.toLowerCase();
-  //             const typeWithoutExtension = typeName.substring(0, typeName.lastIndexOf('.'));
-  //             return typeWithoutExtension === tipo.toLowerCase();
-  //           }));
-  //       return nameMatch && typeMatch;
-  //     });
-
-  //     if (filtro === 'Menor' || initialFilter === 'Menor') {
-  //       filteredPokemonList = filteredPokemonList?.sort(
-  //         (a, b) => parseInt(a.attributes.num) - parseInt(b.attributes.num)
-  //       );
-  //     }
-  //     if (filtro === 'Maior') {
-  //       filteredPokemonList = filteredPokemonList?.sort(
-  //         (b, a) => a.attributes.num - b.attributes.num
-  //       );
-  //     }
-  //     if (filtro === 'A-Z') {
-  //       filteredPokemonList = filteredPokemonList?.sort((a, b) =>
-  //         a.attributes.name.localeCompare(b.attributes.name)
-  //       );
-  //     }
-  //     if (filtro === 'Z-A') {
-  //       filteredPokemonList = filteredPokemonList?.sort((b, a) =>
-  //         a.attributes.name.localeCompare(b.attributes.name)
-  //       );
-  //     }
-
-  //     setPokemonList(filteredPokemonList);
-  //   } catch (error) {
-  //     console.error(error);
-  //   }
-  // };
-
-  const handleLoadMore = () => {
-    setOffset(offset + 1);
-  };
-
   const getPokemon = async () => {
     try {
       let infoSnapshot;
-  
       if (tipo !== '') {
         infoSnapshot = await firestore()
           .collection('Pokemon')
@@ -127,23 +76,59 @@ export default function CardList({ searchText, tipo, filtro }) {
           .where('textType', 'array-contains', tipo)
           .get();
       } else {
-        infoSnapshot = await firestore()
-          .collection('Pokemon')
-          .orderBy('number')
-          .get();
+        infoSnapshot = await firestore().collection('Pokemon').orderBy('number').get();
       }
-  
-      const infoData = infoSnapshot.docs.map(doc => ({
+
+      const infoData = infoSnapshot.docs.map((doc) => ({
         ...doc.data(),
       }));
-  
+
       let filteredPokemon = infoData;
+      if (limit) {
+        if (limit == 151) {
+          filteredPokemon = infoData.filter((pokemon) => parseInt(pokemon.number) <= 151);
+        } else if (limit == 152) {
+          filteredPokemon = infoData.filter(
+            (pokemon) => parseInt(pokemon.number) >= 152 && parseInt(pokemon.number) <= 251
+          );
+        } else if (limit == 252) {
+          filteredPokemon = infoData.filter(
+            (pokemon) => parseInt(pokemon.number) >= 252 && parseInt(pokemon.number) <= 386
+          );
+        } else if (limit == 387) {
+          filteredPokemon = infoData.filter(
+            (pokemon) => parseInt(pokemon.number) >= 387 && parseInt(pokemon.number) <= 493
+          );
+        } else if (limit == 494) {
+          filteredPokemon = infoData.filter(
+            (pokemon) => parseInt(pokemon.number) >= 494 && parseInt(pokemon.number) <= 649
+          );
+        } else if (limit == 650) {
+          filteredPokemon = infoData.filter(
+            (pokemon) => parseInt(pokemon.number) >= 650 && parseInt(pokemon.number) <= 721
+          );
+        } else if (limit == 722) {
+          filteredPokemon = infoData.filter(
+            (pokemon) => parseInt(pokemon.number) >= 722 && parseInt(pokemon.number) <= 809
+          );
+        } else if (limit == 810) {
+          filteredPokemon = infoData.filter(
+            (pokemon) => parseInt(pokemon.number) >= 810 && parseInt(pokemon.number) <= 905
+          );
+        } else if (limit == 906) {
+          filteredPokemon = infoData.filter(
+            (pokemon) => parseInt(pokemon.number) >= 906 && parseInt(pokemon.number) <= 1025
+          );
+        }
+      }
+
       if (searchText) {
-        filteredPokemon = infoData.filter(pokemon =>
+        filteredPokemon = infoData.filter((pokemon) =>
+          // eslint-disable-next-line react/prop-types
           pokemon.name.toLowerCase().includes(searchText.toLowerCase())
         );
       }
-  
+
       if (filtro === 'Menor') {
         filteredPokemon.sort((a, b) => parseInt(a.number) - parseInt(b.number));
       } else if (filtro === 'Maior') {
@@ -153,17 +138,12 @@ export default function CardList({ searchText, tipo, filtro }) {
       } else if (filtro === 'Z-A') {
         filteredPokemon.sort((a, b) => b.name.localeCompare(a.name));
       }
-  
+
       setPokemon(filteredPokemon);
     } catch (error) {
       console.error('Erro ao consultar o Firestore:', error);
     }
   };
-  
-  
-  
-  
-
 
   const renderPokemon = ({ item }) => {
     const isFavorito = favoritos.some((p) => p.name === item.name);
@@ -175,14 +155,15 @@ export default function CardList({ searchText, tipo, filtro }) {
               <Styled.Num>Nº{item?.number}</Styled.Num>
               <Styled.Name>{item?.name}</Styled.Name>
             </Styled.BoxInfos>
+
             <Styled.BoxTypes>
-              {item?.type.map((type, index) => (
-                <Styled.Types
-                  source={{ uri: type }}
-                  key={index}
-                />
-              ))}
+              {Array.isArray(item?.type) ? (
+                item.type.map((type, index) => <Styled.Types source={{ uri: type }} key={index} />)
+              ) : (
+                <Styled.Types source={{ uri: item?.type }} />
+              )}
             </Styled.BoxTypes>
+
             <Styled.Bg
               source={{
                 uri: item?.backType,

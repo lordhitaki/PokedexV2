@@ -5,9 +5,8 @@ import { Image } from 'react-native';
 export const Container = styled.SafeAreaView`
   flex: 1;
   background-color: ${(props) => props.theme.backgrounds.main};
-    `;
-  
-  
+`;
+
 export const Scroll = styled.ScrollView`
   width: 100%;
   height: 100%;
@@ -155,7 +154,7 @@ export const BoxWeak = styled.View`
 export const ImgWeak = styled(Image)`
   width: 100px;
   height: 45px;
-  object-fit: contain
+  object-fit: contain;
 `;
 
 export const BoxEvo = styled.View`
@@ -249,6 +248,7 @@ export const EvoType = styled(Image)`
 
 export const ImgCard = styled(Image)`
   object-fit: contain;
-  width: 90px;
-  height: 72px;
+  width: 92px;
+  height: 74px;
+  right: 2px;
 `;
